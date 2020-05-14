@@ -33,6 +33,7 @@ pub fn ephemeral() -> Result<Vec<PathBuf>> {
         ephemeral.join("wasi_ephemeral_random.witx"),
         ephemeral.join("wasi_ephemeral_sched.witx"),
         ephemeral.join("wasi_ephemeral_sock.witx"),
+        ephemeral.join("wasi_ephemeral_nn.witx"),
     ];
     ensure_exists(&paths)?;
     Ok(paths)
