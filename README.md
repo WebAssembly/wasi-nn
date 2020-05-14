@@ -1,3 +1,7 @@
+This repo is a logical fork of [main WASI repo](https://github.com/WebAssembly/WASI) for proposing the wasi-nn module. 
+
+----
+
 # WebAssembly System Interface
 
 ![WASI](WASI.png)
