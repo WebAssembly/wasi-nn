@@ -1096,6 +1096,100 @@ Alignment: 4
 - <a href="#prestat.dir" name="prestat.dir"></a> `dir`: [`prestat_dir`](#prestat_dir)
 When type is [`preopentype::dir`](#preopentype.dir):
 
+## <a href="#tensor_dimensions" name="tensor_dimensions"></a> `tensor_dimensions`: `Array<u32>`
+The dimensions of a tensor.
+
+The array length matches the tensor rank and each element in the array
+describes the size of each dimension.
+
+Size: 8
+
+Alignment: 4
+
+## <a href="#tensor_type" name="tensor_type"></a> `tensor_type`: Enum(`u8`)
+The type of the elements in a tensor.
+
+Size: 1
+
+Alignment: 1
+
+### Variants
+- <a href="#tensor_type.f16" name="tensor_type.f16"></a> `f16`
+
+- <a href="#tensor_type.f32" name="tensor_type.f32"></a> `f32`
+
+- <a href="#tensor_type.i32" name="tensor_type.i32"></a> `i32`
+
+- <a href="#tensor_type.u32" name="tensor_type.u32"></a> `u32`
+
+## <a href="#tensor" name="tensor"></a> `tensor`: Struct
+A tensor.
+
+Size: 20
+
+Alignment: 4
+
+### Struct members
+- <a href="#tensor.dimensions" name="tensor.dimensions"></a> `dimensions`: [`tensor_dimensions`](#tensor_dimensions)
+Describe the size of the tensor (e.g. 2x2x2x2 -> [2, 2, 2, 2]). To represent a tensor containing a single value,
+use `[1]` for the tensor dimensions.
+
+Offset: 0
+
+- <a href="#tensor.type" name="tensor.type"></a> `type`: [`tensor_type`](#tensor_type)
+
+Offset: 8
+
+- <a href="#tensor.data" name="tensor.data"></a> `data`: `Array<u8>`
+The tensor data; initially conceived as a sparse representation, each empty cell would be filled with zeroes and
+the array length must match the product of all of the dimensions and the number of bytes in the type (e.g. a 2x2
+tensor with 4-byte f32 elements would have a data array of length 16). Naturally, this representation requires
+some knowledge of how to lay out data in memory--e.g. using row-major ordering--and could perhaps be improved
+by future witx features (TODO).
+
+Offset: 12
+
+## <a href="#graph" name="graph"></a> `graph`
+An execution graph for performing inference (i.e. a model).
+
+Size: 4
+
+Alignment: 4
+
+### Supertypes
+## <a href="#graph_encoding" name="graph_encoding"></a> `graph_encoding`: Enum(`u8`)
+Describes the encoding of the graph.
+
+Size: 1
+
+Alignment: 1
+
+### Variants
+- <a href="#graph_encoding.unknown" name="graph_encoding.unknown"></a> `unknown`
+
+## <a href="#execution_target" name="execution_target"></a> `execution_target`: Enum(`u8`)
+Define where the graph should be executed.
+
+Size: 1
+
+Alignment: 1
+
+### Variants
+- <a href="#execution_target.cpu" name="execution_target.cpu"></a> `cpu`
+
+- <a href="#execution_target.gpu" name="execution_target.gpu"></a> `gpu`
+
+- <a href="#execution_target.tpu" name="execution_target.tpu"></a> `tpu`
+
+## <a href="#graph_execution_context" name="graph_execution_context"></a> `graph_execution_context`
+A $graph_execution_context allows for attaching inputs prior to calling [`compute`](#compute) on a graph and retrieving outputs after
+the computation has completed. TODO a handle may not be the right type but we want it to be opaque to users.
+
+Size: 4
+
+Alignment: 4
+
+### Supertypes
 # Modules
 ## <a href="#wasi_ephemeral_args" name="wasi_ephemeral_args"></a> wasi_ephemeral_args
 ### Imports
@@ -2059,4 +2153,106 @@ Which channels on the socket to shut down.
 
 ##### Results
 - <a href="#shutdown.error" name="shutdown.error"></a> `error`: [`errno`](#errno)
+
+## <a href="#wasi_ephemeral_nn" name="wasi_ephemeral_nn"></a> wasi_ephemeral_nn
+### Imports
+#### Memory
+### Functions
+
+---
+
+#### <a href="#load" name="load"></a> `load(graph_buf: Pointer<u8>, graph_buf_len: size, encoding: graph_encoding, target: execution_target) -> (errno, graph)`
+Load an opaque sequence of bytes to use for inference.
+
+This allows runtime implementations to support multiple graph encoding formats. For unsupported graph encodings,
+return [`errno::inval`](#errno.inval).
+
+##### Params
+- <a href="#load.graph_buf" name="load.graph_buf"></a> `graph_buf`: `Pointer<u8>`
+The address to load from.
+
+- <a href="#load.graph_buf_len" name="load.graph_buf_len"></a> `graph_buf_len`: [`size`](#size)
+The length of the data to load.
+
+- <a href="#load.encoding" name="load.encoding"></a> `encoding`: [`graph_encoding`](#graph_encoding)
+The encoding of the graph.
+
+- <a href="#load.target" name="load.target"></a> `target`: [`execution_target`](#execution_target)
+Where to execute the graph.
+
+##### Results
+- <a href="#load.error" name="load.error"></a> `error`: [`errno`](#errno)
+
+- <a href="#load.graph" name="load.graph"></a> `graph`: [`graph`](#graph)
+
+
+---
+
+#### <a href="#init_execution_context" name="init_execution_context"></a> `init_execution_context(graph: graph) -> (errno, graph_execution_context)`
+TODO Functions like `describe_graph_inputs` and `describe_graph_outputs` (returning
+an array of `$tensor_description`s) might be useful for introspecting the graph but are not yet included here.
+Create an execution instance of a loaded graph.
+TODO this may need to accept flags that might affect the compilation or execution of the graph.
+
+##### Params
+- <a href="#init_execution_context.graph" name="init_execution_context.graph"></a> `graph`: [`graph`](#graph)
+
+##### Results
+- <a href="#init_execution_context.error" name="init_execution_context.error"></a> `error`: [`errno`](#errno)
+
+- <a href="#init_execution_context.context" name="init_execution_context.context"></a> `context`: [`graph_execution_context`](#graph_execution_context)
+
+
+---
+
+#### <a href="#set_input" name="set_input"></a> `set_input(context: graph_execution_context, index: u32, tensor: tensor) -> errno`
+Define the inputs to use for inference.
+
+This should return an $errno (TODO define) if the input tensor does not match the expected dimensions and type.
+
+##### Params
+- <a href="#set_input.context" name="set_input.context"></a> `context`: [`graph_execution_context`](#graph_execution_context)
+
+- <a href="#set_input.index" name="set_input.index"></a> `index`: `u32`
+The index of the input to change.
+
+- <a href="#set_input.tensor" name="set_input.tensor"></a> `tensor`: [`tensor`](#tensor)
+The tensor to set as the input.
+
+##### Results
+- <a href="#set_input.error" name="set_input.error"></a> `error`: [`errno`](#errno)
+
+
+---
+
+#### <a href="#get_output" name="get_output"></a> `get_output(context: graph_execution_context, index: u32) -> (errno, tensor)`
+Extract the outputs after inference.
+
+This should return an $errno (TODO define) if the inference has not yet run.
+
+##### Params
+- <a href="#get_output.context" name="get_output.context"></a> `context`: [`graph_execution_context`](#graph_execution_context)
+
+- <a href="#get_output.index" name="get_output.index"></a> `index`: `u32`
+The index of the output to retrieve.
+
+##### Results
+- <a href="#get_output.error" name="get_output.error"></a> `error`: [`errno`](#errno)
+The output tensor to retrieve.
+
+- <a href="#get_output.tensor" name="get_output.tensor"></a> `tensor`: [`tensor`](#tensor)
+
+
+---
+
+#### <a href="#compute" name="compute"></a> `compute(context: graph_execution_context) -> errno`
+Compute the inference on the given inputs (see [`set_input`](#set_input)).
+
+This should return an $errno (TODO define) if the inputs are not all defined.
+
+##### Params
+- <a href="#compute.context" name="compute.context"></a> `context`: [`graph_execution_context`](#graph_execution_context)
+
+##### Results
+- <a href="#compute.error" name="compute.error"></a> `error`: [`errno`](#errno)
 
