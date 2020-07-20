@@ -1122,6 +1122,19 @@ Alignment: 1
 
 - <a href="#tensor_type.u32" name="tensor_type.u32"></a> `u32`
 
+## <a href="#tensor_data" name="tensor_data"></a> `tensor_data`: `Array<u8>`
+The tensor data
+
+Initially conceived as a sparse representation, each empty cell would be filled with zeroes and
+the array length must match the product of all of the dimensions and the number of bytes in the type (e.g. a 2x2
+tensor with 4-byte f32 elements would have a data array of length 16). Naturally, this representation requires
+some knowledge of how to lay out data in memory--e.g. using row-major ordering--and could perhaps be improved
+by future witx features (TODO).
+
+Size: 8
+
+Alignment: 4
+
 ## <a href="#tensor" name="tensor"></a> `tensor`: Struct
 A tensor.
 
@@ -1140,12 +1153,8 @@ Offset: 0
 
 Offset: 8
 
-- <a href="#tensor.data" name="tensor.data"></a> `data`: `Array<u8>`
-The tensor data; initially conceived as a sparse representation, each empty cell would be filled with zeroes and
-the array length must match the product of all of the dimensions and the number of bytes in the type (e.g. a 2x2
-tensor with 4-byte f32 elements would have a data array of length 16). Naturally, this representation requires
-some knowledge of how to lay out data in memory--e.g. using row-major ordering--and could perhaps be improved
-by future witx features (TODO).
+- <a href="#tensor.data" name="tensor.data"></a> `data`: [`tensor_data`](#tensor_data)
+Contains the tensor data.
 
 Offset: 12
 
