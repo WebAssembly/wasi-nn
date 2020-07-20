@@ -8,8 +8,6 @@
 ;; This is a `witx` file. See [here](https://github.com/WebAssembly/WASI/tree/master/docs/witx.md)
 ;; for an explanation of what that means.
 
-(use "typenames.witx")
-
 ;;; The dimensions of a tensor.
 ;;;
 ;;; The array length matches the tensor rank and each element in the array
@@ -26,6 +24,15 @@
   )
 )
 
+;;; The tensor data
+;;;
+;;; Initially conceived as a sparse representation, each empty cell would be filled with zeroes and
+;;; the array length must match the product of all of the dimensions and the number of bytes in the type (e.g. a 2x2
+;;; tensor with 4-byte f32 elements would have a data array of length 16). Naturally, this representation requires
+;;; some knowledge of how to lay out data in memory--e.g. using row-major ordering--and could perhaps be improved
+;;; by future witx features (TODO).
+(typename $tensor_data (array u8))
+
 ;;; A tensor.
 (typename $tensor
   (struct
@@ -36,12 +43,8 @@
     ;; Describe the type of element in the tensor (e.g. f32).
     (field $type $tensor_type)
 
-    ;;; The tensor data; initially conceived as a sparse representation, each empty cell would be filled with zeroes and
-    ;;; the array length must match the product of all of the dimensions and the number of bytes in the type (e.g. a 2x2
-    ;;; tensor with 4-byte f32 elements would have a data array of length 16). Naturally, this representation requires
-    ;;; some knowledge of how to lay out data in memory--e.g. using row-major ordering--and could perhaps be improved
-    ;;; by future witx features (TODO).
-    (field $data (array u8))
+    ;;; Contains the tensor data.
+    (field $data $tensor_data)
   )
 )
 
