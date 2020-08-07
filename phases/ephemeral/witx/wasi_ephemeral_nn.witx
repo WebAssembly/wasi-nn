@@ -8,6 +8,23 @@
 ;; This is a `witx` file. See [here](https://github.com/WebAssembly/WASI/tree/master/docs/witx.md)
 ;; for an explanation of what that means.
 
+;;; The size of a graph buffer.
+(typename $size u32)
+
+;;; Error codes returned by functions in this API.
+(typename $errno
+  (enum u16
+    ;;; No error occurred.
+    $success
+    ;;; Caller module passed an invalid argument.
+    $invalid_argument
+    ;;; Caller module is missing a memory export.
+    $missing_memory
+    ;;; Device or resource busy.
+    $busy
+  )
+)
+
 ;;; The dimensions of a tensor.
 ;;;
 ;;; The array length matches the tensor rank and each element in the array
