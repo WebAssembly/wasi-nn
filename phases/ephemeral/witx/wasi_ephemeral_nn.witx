@@ -36,8 +36,8 @@
   (enum u8
     $f16
     $f32
+    $u8
     $i32
-    $u32
   )
 )
 
@@ -65,14 +65,20 @@
   )
 )
 
+;;; The graph initialization data. This consists of an array of buffers because implementing backends may encode their
+;;; graph IR in parts (e.g. OpenVINO stores its IR and weights separately).
+(typename $graph_builder (array u8))
+(typename $graph_builder_array (array $graph_builder))
+
 ;;; An execution graph for performing inference (i.e. a model).
 (typename $graph (handle))
 
-;;; Describes the encoding of the graph.
+;;; Describes the encoding of the graph. This allows the API to be implemented by various backends that encode (i.e.
+;;; serialize) their graph IR differently.
 (typename $graph_encoding
   (enum u8
-    $unknown
-    ;; TODO fill out with more graph types once we know what encoding formats of graphs to support.
+    ;;; TODO document buffer order
+    $openvino
   )
 )
 
@@ -98,10 +104,8 @@
   ;;; This allows runtime implementations to support multiple graph encoding formats. For unsupported graph encodings,
   ;;; return `errno::inval`.
   (@interface func (export "load")
-    ;;; The address to load from.
-    (param $graph_buf (@witx pointer u8))
-    ;;; The length of the data to load.
-    (param $graph_buf_len $size)
+    ;;; The bytes necessary to build the graph.
+    (param $builder $graph_builder_array)
     ;;; The encoding of the graph.
     (param $encoding $graph_encoding)
     ;;; Where to execute the graph.
@@ -142,10 +146,15 @@
     (param $context $graph_execution_context)
     ;;; The index of the output to retrieve.
     (param $index u32)
+    ;;; An out parameter to which to copy the tensor data. The caller is responsible for allocating enough memory for
+    ;;; the tensor data or an error will be returned. Currently there is no dynamic way to extract the additional
+    ;;; tensor metadata (i.e. dimension, element type) but this should be added at some point.
+    (param $out_buffer (@witx pointer u8))
+    (param $out_buffer_max_size $size)
 
-    ;;; The output tensor to retrieve.
     (result $error $errno)
-    (result $tensor $tensor)
+    ;;; The number of bytes of tensor data written to the `$out_buffer`.
+    (result $bytes_written $size)
   )
 
   ;;; Compute the inference on the given inputs (see `set_input`).
