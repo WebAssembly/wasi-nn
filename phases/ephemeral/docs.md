@@ -1096,6 +1096,35 @@ Alignment: 4
 - <a href="#prestat.dir" name="prestat.dir"></a> `dir`: [`prestat_dir`](#prestat_dir)
 When type is [`preopentype::dir`](#preopentype.dir):
 
+## <a href="#buffer_size" name="buffer_size"></a> `buffer_size`: `u32`
+The size of a graph buffer. This is equivalent to `$size` in `typenames.witx` but renamed since `typenames.witx` is
+not included here but is included in the overall ephemeral phase.
+
+Size: 4
+
+Alignment: 4
+
+## <a href="#nn_errno" name="nn_errno"></a> `nn_errno`: Enum(`u16`)
+Error codes returned by functions in this API. This is prefixed to avoid conflicts with the `$errno` in
+`typenames.witx`.
+
+Size: 2
+
+Alignment: 2
+
+### Variants
+- <a href="#nn_errno.success" name="nn_errno.success"></a> `success`
+No error occurred.
+
+- <a href="#nn_errno.invalid_argument" name="nn_errno.invalid_argument"></a> `invalid_argument`
+Caller module passed an invalid argument.
+
+- <a href="#nn_errno.missing_memory" name="nn_errno.missing_memory"></a> `missing_memory`
+Caller module is missing a memory export.
+
+- <a href="#nn_errno.busy" name="nn_errno.busy"></a> `busy`
+Device or resource busy.
+
 ## <a href="#tensor_dimensions" name="tensor_dimensions"></a> `tensor_dimensions`: `Array<u32>`
 The dimensions of a tensor.
 
@@ -1118,9 +1147,9 @@ Alignment: 1
 
 - <a href="#tensor_type.f32" name="tensor_type.f32"></a> `f32`
 
-- <a href="#tensor_type.i32" name="tensor_type.i32"></a> `i32`
+- <a href="#tensor_type.u8" name="tensor_type.u8"></a> `u8`
 
-- <a href="#tensor_type.u32" name="tensor_type.u32"></a> `u32`
+- <a href="#tensor_type.i32" name="tensor_type.i32"></a> `i32`
 
 ## <a href="#tensor_data" name="tensor_data"></a> `tensor_data`: `Array<u8>`
 The tensor data
@@ -1158,6 +1187,20 @@ Contains the tensor data.
 
 Offset: 12
 
+## <a href="#graph_builder" name="graph_builder"></a> `graph_builder`: `Array<u8>`
+The graph initialization data. This consists of an array of buffers because implementing backends may encode their
+graph IR in parts (e.g. OpenVINO stores its IR and weights separately).
+
+Size: 8
+
+Alignment: 4
+
+## <a href="#graph_builder_array" name="graph_builder_array"></a> `graph_builder_array`: `Array<graph_builder>`
+
+Size: 8
+
+Alignment: 4
+
 ## <a href="#graph" name="graph"></a> `graph`
 An execution graph for performing inference (i.e. a model).
 
@@ -1167,14 +1210,16 @@ Alignment: 4
 
 ### Supertypes
 ## <a href="#graph_encoding" name="graph_encoding"></a> `graph_encoding`: Enum(`u8`)
-Describes the encoding of the graph.
+Describes the encoding of the graph. This allows the API to be implemented by various backends that encode (i.e.
+serialize) their graph IR differently.
 
 Size: 1
 
 Alignment: 1
 
 ### Variants
-- <a href="#graph_encoding.unknown" name="graph_encoding.unknown"></a> `unknown`
+- <a href="#graph_encoding.openvino" name="graph_encoding.openvino"></a> `openvino`
+TODO document buffer order
 
 ## <a href="#execution_target" name="execution_target"></a> `execution_target`: Enum(`u8`)
 Define where the graph should be executed.
@@ -2170,18 +2215,15 @@ Which channels on the socket to shut down.
 
 ---
 
-#### <a href="#load" name="load"></a> `load(graph_buf: Pointer<u8>, graph_buf_len: size, encoding: graph_encoding, target: execution_target) -> (errno, graph)`
+#### <a href="#load" name="load"></a> `load(builder: graph_builder_array, encoding: graph_encoding, target: execution_target) -> (nn_errno, graph)`
 Load an opaque sequence of bytes to use for inference.
 
 This allows runtime implementations to support multiple graph encoding formats. For unsupported graph encodings,
 return [`errno::inval`](#errno.inval).
 
 ##### Params
-- <a href="#load.graph_buf" name="load.graph_buf"></a> `graph_buf`: `Pointer<u8>`
-The address to load from.
-
-- <a href="#load.graph_buf_len" name="load.graph_buf_len"></a> `graph_buf_len`: [`size`](#size)
-The length of the data to load.
+- <a href="#load.builder" name="load.builder"></a> `builder`: [`graph_builder_array`](#graph_builder_array)
+The bytes necessary to build the graph.
 
 - <a href="#load.encoding" name="load.encoding"></a> `encoding`: [`graph_encoding`](#graph_encoding)
 The encoding of the graph.
@@ -2190,14 +2232,14 @@ The encoding of the graph.
 Where to execute the graph.
 
 ##### Results
-- <a href="#load.error" name="load.error"></a> `error`: [`errno`](#errno)
+- <a href="#load.error" name="load.error"></a> `error`: [`nn_errno`](#nn_errno)
 
 - <a href="#load.graph" name="load.graph"></a> `graph`: [`graph`](#graph)
 
 
 ---
 
-#### <a href="#init_execution_context" name="init_execution_context"></a> `init_execution_context(graph: graph) -> (errno, graph_execution_context)`
+#### <a href="#init_execution_context" name="init_execution_context"></a> `init_execution_context(graph: graph) -> (nn_errno, graph_execution_context)`
 TODO Functions like `describe_graph_inputs` and `describe_graph_outputs` (returning
 an array of `$tensor_description`s) might be useful for introspecting the graph but are not yet included here.
 Create an execution instance of a loaded graph.
@@ -2207,17 +2249,17 @@ TODO this may need to accept flags that might affect the compilation or executio
 - <a href="#init_execution_context.graph" name="init_execution_context.graph"></a> `graph`: [`graph`](#graph)
 
 ##### Results
-- <a href="#init_execution_context.error" name="init_execution_context.error"></a> `error`: [`errno`](#errno)
+- <a href="#init_execution_context.error" name="init_execution_context.error"></a> `error`: [`nn_errno`](#nn_errno)
 
 - <a href="#init_execution_context.context" name="init_execution_context.context"></a> `context`: [`graph_execution_context`](#graph_execution_context)
 
 
 ---
 
-#### <a href="#set_input" name="set_input"></a> `set_input(context: graph_execution_context, index: u32, tensor: tensor) -> errno`
+#### <a href="#set_input" name="set_input"></a> `set_input(context: graph_execution_context, index: u32, tensor: tensor) -> nn_errno`
 Define the inputs to use for inference.
 
-This should return an $errno (TODO define) if the input tensor does not match the expected dimensions and type.
+This should return an $nn_errno (TODO define) if the input tensor does not match the expected dimensions and type.
 
 ##### Params
 - <a href="#set_input.context" name="set_input.context"></a> `context`: [`graph_execution_context`](#graph_execution_context)
@@ -2229,15 +2271,15 @@ The index of the input to change.
 The tensor to set as the input.
 
 ##### Results
-- <a href="#set_input.error" name="set_input.error"></a> `error`: [`errno`](#errno)
+- <a href="#set_input.error" name="set_input.error"></a> `error`: [`nn_errno`](#nn_errno)
 
 
 ---
 
-#### <a href="#get_output" name="get_output"></a> `get_output(context: graph_execution_context, index: u32) -> (errno, tensor)`
+#### <a href="#get_output" name="get_output"></a> `get_output(context: graph_execution_context, index: u32, out_buffer: Pointer<u8>, out_buffer_max_size: buffer_size) -> (nn_errno, buffer_size)`
 Extract the outputs after inference.
 
-This should return an $errno (TODO define) if the inference has not yet run.
+This should return an $nn_errno (TODO define) if the inference has not yet run.
 
 ##### Params
 - <a href="#get_output.context" name="get_output.context"></a> `context`: [`graph_execution_context`](#graph_execution_context)
@@ -2245,23 +2287,30 @@ This should return an $errno (TODO define) if the inference has not yet run.
 - <a href="#get_output.index" name="get_output.index"></a> `index`: `u32`
 The index of the output to retrieve.
 
-##### Results
-- <a href="#get_output.error" name="get_output.error"></a> `error`: [`errno`](#errno)
-The output tensor to retrieve.
+- <a href="#get_output.out_buffer" name="get_output.out_buffer"></a> `out_buffer`: `Pointer<u8>`
+An out parameter to which to copy the tensor data. The caller is responsible for allocating enough memory for
+the tensor data or an error will be returned. Currently there is no dynamic way to extract the additional
+tensor metadata (i.e. dimension, element type) but this should be added at some point.
 
-- <a href="#get_output.tensor" name="get_output.tensor"></a> `tensor`: [`tensor`](#tensor)
+- <a href="#get_output.out_buffer_max_size" name="get_output.out_buffer_max_size"></a> `out_buffer_max_size`: [`buffer_size`](#buffer_size)
+
+##### Results
+- <a href="#get_output.error" name="get_output.error"></a> `error`: [`nn_errno`](#nn_errno)
+
+- <a href="#get_output.bytes_written" name="get_output.bytes_written"></a> `bytes_written`: [`buffer_size`](#buffer_size)
+The number of bytes of tensor data written to the `$out_buffer`.
 
 
 ---
 
-#### <a href="#compute" name="compute"></a> `compute(context: graph_execution_context) -> errno`
+#### <a href="#compute" name="compute"></a> `compute(context: graph_execution_context) -> nn_errno`
 Compute the inference on the given inputs (see [`set_input`](#set_input)).
 
-This should return an $errno (TODO define) if the inputs are not all defined.
+This should return an $nn_errno (TODO define) if the inputs are not all defined.
 
 ##### Params
 - <a href="#compute.context" name="compute.context"></a> `context`: [`graph_execution_context`](#graph_execution_context)
 
 ##### Results
-- <a href="#compute.error" name="compute.error"></a> `error`: [`errno`](#errno)
+- <a href="#compute.error" name="compute.error"></a> `error`: [`nn_errno`](#nn_errno)
 
