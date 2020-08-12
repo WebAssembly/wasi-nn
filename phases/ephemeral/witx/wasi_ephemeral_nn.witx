@@ -8,11 +8,13 @@
 ;; This is a `witx` file. See [here](https://github.com/WebAssembly/WASI/tree/master/docs/witx.md)
 ;; for an explanation of what that means.
 
-;;; The size of a graph buffer.
-(typename $size u32)
+;;; The size of a graph buffer. This is equivalent to `$size` in `typenames.witx` but renamed since `typenames.witx` is
+;;; not included here but is included in the overall ephemeral phase.
+(typename $buffer_size u32)
 
-;;; Error codes returned by functions in this API.
-(typename $errno
+;;; Error codes returned by functions in this API. This is prefixed to avoid conflicts with the `$errno` in
+;;; `typenames.witx`.
+(typename $nn_errno
   (enum u16
     ;;; No error occurred.
     $success
@@ -111,7 +113,7 @@
     ;;; Where to execute the graph.
     (param $target $execution_target)
 
-    (result $error $errno)
+    (result $error $nn_errno)
     (result $graph $graph)
   )
 
@@ -122,13 +124,13 @@
   ;;; TODO this may need to accept flags that might affect the compilation or execution of the graph.
   (@interface func (export "init_execution_context")
     (param $graph $graph)
-    (result $error $errno)
+    (result $error $nn_errno)
     (result $context $graph_execution_context)
   )
 
   ;;; Define the inputs to use for inference.
   ;;;
-  ;;; This should return an $errno (TODO define) if the input tensor does not match the expected dimensions and type.
+  ;;; This should return an $nn_errno (TODO define) if the input tensor does not match the expected dimensions and type.
   (@interface func (export "set_input")
     (param $context $graph_execution_context)
     ;;; The index of the input to change.
@@ -136,12 +138,12 @@
     ;;; The tensor to set as the input.
     (param $tensor $tensor)
 
-    (result $error $errno)
+    (result $error $nn_errno)
   )
 
   ;;; Extract the outputs after inference.
   ;;;
-  ;;; This should return an $errno (TODO define) if the inference has not yet run.
+  ;;; This should return an $nn_errno (TODO define) if the inference has not yet run.
   (@interface func (export "get_output")
     (param $context $graph_execution_context)
     ;;; The index of the output to retrieve.
@@ -150,18 +152,18 @@
     ;;; the tensor data or an error will be returned. Currently there is no dynamic way to extract the additional
     ;;; tensor metadata (i.e. dimension, element type) but this should be added at some point.
     (param $out_buffer (@witx pointer u8))
-    (param $out_buffer_max_size $size)
+    (param $out_buffer_max_size $buffer_size)
 
-    (result $error $errno)
+    (result $error $nn_errno)
     ;;; The number of bytes of tensor data written to the `$out_buffer`.
-    (result $bytes_written $size)
+    (result $bytes_written $buffer_size)
   )
 
   ;;; Compute the inference on the given inputs (see `set_input`).
   ;;;
-  ;;; This should return an $errno (TODO define) if the inputs are not all defined.
+  ;;; This should return an $nn_errno (TODO define) if the inputs are not all defined.
   (@interface func (export "compute")
     (param $context $graph_execution_context)
-    (result $error $errno)
+    (result $error $nn_errno)
   )
 )
