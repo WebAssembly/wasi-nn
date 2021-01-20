@@ -234,13 +234,7 @@ impl UnionDatatype {
 
 impl HandleDatatype {
     pub fn to_sexpr(&self) -> SExpr {
-        let header = vec![SExpr::word("handle")];
-        let supertypes = self
-            .supertypes
-            .iter()
-            .map(|s| s.to_sexpr())
-            .collect::<Vec<SExpr>>();
-        SExpr::Vec([header, supertypes].concat())
+        SExpr::Vec(vec![SExpr::word("handle")])
     }
 }
 impl IntRepr {
@@ -321,7 +315,10 @@ impl InterfaceFunc {
             })
             .collect();
         let attrs = if self.noreturn {
-            vec![SExpr::annot("witx"), SExpr::word("noreturn")]
+            vec![SExpr::Vec(vec![
+                SExpr::annot("witx"),
+                SExpr::word("noreturn"),
+            ])]
         } else {
             vec![]
         };
