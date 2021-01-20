@@ -377,7 +377,7 @@
     ;;; descriptor itself, while the *inheriting* rights are rights that apply to
     ;;; file descriptors derived from it.
     (param $fs_rights_base $rights)
-    (param $fs_rights_inherting $rights)
+    (param $fs_rights_inheriting $rights)
     (param $fdflags $fdflags)
     (result $error $errno)
     ;;; The file descriptor of the file that has been opened.
@@ -462,6 +462,7 @@
   (@interface func (export "proc_exit")
     ;;; The exit code returned by the process.
     (param $rval $exitcode)
+    (@witx noreturn)
   )
 
   ;;; Send a signal to the process of the calling thread.
