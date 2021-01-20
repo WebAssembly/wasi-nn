@@ -1,5 +1,12 @@
-This repo is a logical fork of [main WASI repo](https://github.com/WebAssembly/WASI) for proposing
-the wasi-nn module. 
+[wasi-nn](https://github.com/WebAssembly/wasi-nn) is a proposal to add a WASI module for machine
+learning. It includes:
+ - an [explainer](docs/Explainer.md), diving into the rationale for this specification
+ - the proposed API in [WITX
+   form](https://github.com/WebAssembly/wasi-nn/blob/main/phases/ephemeral/witx/wasi_ephemeral_nn.witx)
+
+Following the [WASI proposal
+process](https://github.com/WebAssembly/WASI/blob/master/docs/Process.md), this repository is a
+logical fork of the [main WASI repo](https://github.com/WebAssembly/WASI). 
 
 ----
 
