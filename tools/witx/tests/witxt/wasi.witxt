@@ -24,3 +24,10 @@
 (witx
   (load
     "../../../../phases/ephemeral/witx/wasi_ephemeral_fd.witx"))
+
+;; wasi-nn should work
+(witx
+  (load
+    "../../../../phases/ephemeral/witx/wasi_ephemeral_nn.witx"
+  )
+)

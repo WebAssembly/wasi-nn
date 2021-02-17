@@ -9,7 +9,7 @@ fn validate_docs() {
         witx::phases::ephemeral().unwrap(),
         witx::phases::old::snapshot_0().unwrap(),
     ] {
-        let doc = witx::load(&phase).unwrap_or_else(|e| panic!("failed to parse: {}", e));
+        let doc = witx::load(&phase).unwrap_or_else(|e| panic!("failed to parse: {:?}", e));
         diff_against_filesystem(&doc.to_md(), &witx::phases::docs_path(&phase));
     }
 }
