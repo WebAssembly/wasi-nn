@@ -15,7 +15,7 @@
 ;;; Error codes returned by functions in this API. This is prefixed to avoid conflicts with the `$errno` in
 ;;; `typenames.witx`.
 (typename $nn_errno
-  (enum u16
+  (enum (@witx tag u16)
     ;;; No error occurred.
     $success
     ;;; Caller module passed an invalid argument.
@@ -31,11 +31,11 @@
 ;;;
 ;;; The array length matches the tensor rank and each element in the array
 ;;; describes the size of each dimension.
-(typename $tensor_dimensions (array u32))
+(typename $tensor_dimensions (list u32))
 
 ;;; The type of the elements in a tensor.
 (typename $tensor_type
-  (enum u8
+  (enum (@witx tag u8)
     $f16
     $f32
     $u8
@@ -50,11 +50,11 @@
 ;;; tensor with 4-byte f32 elements would have a data array of length 16). Naturally, this representation requires
 ;;; some knowledge of how to lay out data in memory--e.g. using row-major ordering--and could perhaps be improved
 ;;; by future witx features (TODO).
-(typename $tensor_data (array u8))
+(typename $tensor_data (list u8))
 
 ;;; A tensor.
 (typename $tensor
-  (struct
+  (record
     ;;; Describe the size of the tensor (e.g. 2x2x2x2 -> [2, 2, 2, 2]). To represent a tensor containing a single value,
     ;;; use `[1]` for the tensor dimensions.
     (field $dimensions $tensor_dimensions)
@@ -69,8 +69,8 @@
 
 ;;; The graph initialization data. This consists of an array of buffers because implementing backends may encode their
 ;;; graph IR in parts (e.g. OpenVINO stores its IR and weights separately).
-(typename $graph_builder (array u8))
-(typename $graph_builder_array (array $graph_builder))
+(typename $graph_builder (list u8))
+(typename $graph_builder_array (list $graph_builder))
 
 ;;; An execution graph for performing inference (i.e. a model).
 (typename $graph (handle))
@@ -78,7 +78,7 @@
 ;;; Describes the encoding of the graph. This allows the API to be implemented by various backends that encode (i.e.
 ;;; serialize) their graph IR differently.
 (typename $graph_encoding
-  (enum u8
+  (enum (@witx tag u8)
     ;;; TODO document buffer order
     $openvino
   )
@@ -86,7 +86,7 @@
 
 ;;; Define where the graph should be executed.
 (typename $execution_target
-  (enum u8
+  (enum (@witx tag u8)
     $cpu
     $gpu
     $tpu
@@ -113,8 +113,7 @@
     ;;; Where to execute the graph.
     (param $target $execution_target)
 
-    (result $error $nn_errno)
-    (result $graph $graph)
+    (result $error (expected $graph (error $nn_errno)))
   )
 
   ;;; TODO Functions like `describe_graph_inputs` and `describe_graph_outputs` (returning
@@ -124,8 +123,7 @@
   ;;; TODO this may need to accept flags that might affect the compilation or execution of the graph.
   (@interface func (export "init_execution_context")
     (param $graph $graph)
-    (result $error $nn_errno)
-    (result $context $graph_execution_context)
+    (result $error (expected $graph_execution_context (error $nn_errno)))
   )
 
   ;;; Define the inputs to use for inference.
@@ -138,7 +136,7 @@
     ;;; The tensor to set as the input.
     (param $tensor $tensor)
 
-    (result $error $nn_errno)
+    (result $error (expected (error $nn_errno)))
   )
 
   ;;; Extract the outputs after inference.
@@ -154,9 +152,8 @@
     (param $out_buffer (@witx pointer u8))
     (param $out_buffer_max_size $buffer_size)
 
-    (result $error $nn_errno)
     ;;; The number of bytes of tensor data written to the `$out_buffer`.
-    (result $bytes_written $buffer_size)
+    (result $error (expected $buffer_size (error $nn_errno)))
   )
 
   ;;; Compute the inference on the given inputs (see `set_input`).
@@ -164,6 +161,6 @@
   ;;; This should return an $nn_errno (TODO define) if the inputs are not all defined.
   (@interface func (export "compute")
     (param $context $graph_execution_context)
-    (result $error $nn_errno)
+    (result $error (expected (error $nn_errno)))
   )
 )
