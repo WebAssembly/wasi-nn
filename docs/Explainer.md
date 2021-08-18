@@ -2,7 +2,7 @@
 
 ## Why Wasm for ML?
 Trained machine learning models are typically deployed on a variety of devices with different
-architectures and operating systems. Web Assembly provides an ideal portable form of deployment for
+architectures and operating systems. WebAssembly provides an ideal portable form of deployment for
 those models. 
 
 ## Why WASI?
