@@ -11,6 +11,7 @@
 ;;; The size of a graph buffer. This is equivalent to `$size` in `typenames.witx` but renamed since `typenames.witx` is
 ;;; not included here but is included in the overall ephemeral phase.
 (typename $buffer_size u32)
+(typename $bytes_written s32)
 
 ;;; Error codes returned by functions in this API. This is prefixed to avoid conflicts with the `$errno` in
 ;;; `typenames.witx`.
@@ -163,4 +164,36 @@
     (param $context $graph_execution_context)
     (result $error (expected (error $nn_errno)))
   )
-)
+
+  ;;; Convert an image into a tensor.
+  ;;;
+  ;;; This should return an $nn_errno (TODO define) if the file fails to open or convert.
+  (@interface func (export "convert_image")
+      ;;; The path to the image.
+      (param $path (list u8))
+      ;;; The width of the tensor
+      (param $width u32)
+      ;;; The height of the tensor
+      (param $height u32)
+      ;;; The precision of the tensor
+      (param $precision $tensor_type)
+      ;;; An output buffer to store the tensor in. Use calculate_buffer_size to create a buffer of the correct size.
+      (param $out_buffer (list u8))
+      ;;; The number of bytes of data written to the `$out_buffer`. If the conversion fails, it will be set to -1
+      (result $error (expected $bytes_written(error $nn_errno)))
+   )
+
+  ;;; Calculates the size buffer required for a tensor.
+  ;;;
+  ;;; return `errno::inval`.
+  (@interface func (export "calculate_buffer_size")
+      ;;; The width of the tensor
+      (param $width u32)
+      ;;; The height of the tensor
+      (param $height u32)
+      ;;; The precision of the tensor
+      (param $precision $tensor_type)
+      ;;; The number of bytes required for the tensor.
+      (result $error (expected $buffer_size(error $nn_errno)))
+   )
+ )
