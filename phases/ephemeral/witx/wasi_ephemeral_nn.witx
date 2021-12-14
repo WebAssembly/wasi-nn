@@ -81,6 +81,7 @@
   (enum (@witx tag u8)
     ;;; TODO document buffer order
     $openvino
+    $tensorflow
   )
 )
 

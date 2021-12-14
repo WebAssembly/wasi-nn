@@ -1326,6 +1326,8 @@ Alignment: 1
 - <a href="#graph_encoding.openvino" name="graph_encoding.openvino"></a> `openvino`
 TODO document buffer order
 
+- <a href="#graph_encoding.tensorflow" name="graph_encoding.tensorflow"></a> `tensorflow`
+
 ## <a href="#execution_target" name="execution_target"></a> `execution_target`: `Variant`
 Define where the graph should be executed.
 
