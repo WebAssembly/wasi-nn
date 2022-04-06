@@ -82,6 +82,7 @@
     ;;; TODO document buffer order
     $openvino
     $tensorflow
+    $onnx
   )
 )
 
