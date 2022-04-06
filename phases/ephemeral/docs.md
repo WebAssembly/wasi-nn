@@ -1328,6 +1328,8 @@ TODO document buffer order
 
 - <a href="#graph_encoding.tensorflow" name="graph_encoding.tensorflow"></a> `tensorflow`
 
+- <a href="#graph_encoding.onnx" name="graph_encoding.onnx"></a> `onnx`
+
 ## <a href="#execution_target" name="execution_target"></a> `execution_target`: `Variant`
 Define where the graph should be executed.
 
