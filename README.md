@@ -102,64 +102,75 @@ proposal.
 
 ### API walk-through
 
-[Walk through of how someone would use this API.]
+The following example describes how a user would use `wasi-nn` to classify an image.
 
-#### [Use case 1]
+```
+TODO
+```
 
-[Provide example code snippets and diagrams explaining how the API would be used to solve the given problem]
-
-#### [Use case 2]
-
-[etc.]
+<!--
+More use cases go here: provide example code snippets and diagrams explaining how the API would be
+used to solve the given problem.
+-->
 
 ### Detailed design discussion
 
-[This section should mostly refer to the .wit.md file that specifies the API. This section is for any discussion of the choices made in the API which don't make sense to document in the spec file itself.]
+For the details of the API, see [wasi-nn.wit.md].
 
-#### Should WASI filesystem be case-sensitive, case-insensitive, or platform-dependent?
+<!--
+This section should mostly refer to the .wit.md file that specifies the API. This section is for
+any discussion of the choices made in the API which don't make sense to document in the spec file
+itself.
+-->
 
-Even just among popular platforms, there are case-sensitive and
-case-insensitive filesystems in wide use.
+#### Should `wasi-nn` support training models?
 
-It would be nice to have an API which presented consistent behavior across
-platforms, so that applications don't have to worry about subtle differences,
-and subtle bugs due to those differences.
+Ideally, yes. In the near term, however, exposing (and implementing) the inference-focused API is
+sufficiently complex to postpone a training-capable API until later. Also, models are typically
+trained offline, prior to deployment, and it is unclear why training models using WASI would be an
+advantage over training them natively. (Conversely, the inference API does make sense: performing ML
+inference in a Wasm deployment is a known use case). See associated discussion
+[here](https://github.com/WebAssembly/wasi-nn/issues/6) and feel free to open pull requests or
+issues related to this that fit within the goals above.
 
-However, implementing case sensitivity on a case-insensitive filesystem, or
-case-insensitivity on a case-sensitive filesystem, are both tricky to do.
+#### Should `wasi-nn` support inspecting models?
 
-One issue is that case insensitivity depends on a Unicode version, so the
-details can differ between different case-insensitive platforms. Another
-issue is tha WASI filesystem in general can't assume it has exclusive access
-to the filesystem, so approaches that involve checking for files with names
-that differ only by case can race with other processes creating new files.
+Ideally, yes. The ability to inspect models would allow users to determine, at runtime, the tensor
+shapes of the inputs and outputs of a model. As with ML training (above), this can be added in the
+future.
 
-#### [Tricky design choice 2]
-
-[etc.]
+<!--
+More "tricky" design choices fit here.
+-->
 
 ### Considered alternatives
 
-[This section is not required if you already covered considered alternatives in the design discussion above.]
+There are other ways to perform ML inference from a WebAssembly program:
 
-#### [Alternative 1]
+1. a user could specify a __custom host API__ for ML tasks; this is similar to the approach taken
+   [here](TODO). The advantages and disadvantages are in line with other "spec vs. custom"
+   trade-offs: the user can precisely tailor the API to their use case, etc., but will not be able
+   to switch easily between implementations.
+2. a user could __compile a framework and/or model to WebAssembly__; this is similar to
+   [here](https://github.com/sonos/tract) and
+   [here](https://blog.tensorflow.org/2020/03/introducing-webassembly-backend-for-tensorflow-js.html).
+   The primary disadvantage to this approach is performance: WebAssembly, even with the recent
+   addition of 128-bit SIMD, does not have optimized primitives for performing ML inference or
+   accessing ML-optimized hardware. The performance loss can be of several orders of magnitude.
 
-[Describe an alternative which was considered, and why you decided against it.]
-
-#### [Alternative 2]
-
-[etc.]
 
 ### Stakeholder Interest & Feedback
 
 TODO before entering Phase 3.
 
-[This should include a list of implementers who have expressed interest in implementing the proposal]
+<!--
+This should include a list of implementers who have expressed interest in implementing the proposal
+-->
 
 ### References & acknowledgements
 
 Many thanks for valuable feedback and advice from:
 
-- [Person 1]
-- [Person 2]
-- [etc.]
+- [Brian Jones](https://github.com/brianjjones)
+- [Radu Matei](https://github.com/radu-matei)
+- [Steve Schoettler](TODO)
