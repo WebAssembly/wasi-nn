@@ -1,7 +1,7 @@
 # `wasi-nn`
 
 A proposed [WebAssembly System Interface](https://github.com/WebAssembly/WASI) API for machine
-learning (ML), also known as neural networks.
+learning (ML).
 
 ### Current Phase
 
@@ -11,8 +11,8 @@ learning (ML), also known as neural networks.
 
 ### Champions
 
-- Andrew Brown
-- Mingqiu Sun
+- [Andrew Brown]: https://github.com/abrown
+- [Mingqiu Sun]: https://github.com/mingqiusun
 
 ### Phase 4 Advancement Criteria
 
@@ -24,23 +24,18 @@ learning (ML), also known as neural networks.
 - [Goals](#goals)
 - [Non-goals](#non-goals)
 - [API walk-through](#api-walk-through)
-  - [Use case 1](#use-case-1)
-  - [Use case 2](#use-case-2)
 - [Detailed design discussion](#detailed-design-discussion)
-  - [[Tricky design choice 1]](#tricky-design-choice-1)
-  - [[Tricky design choice 2]](#tricky-design-choice-2)
 - [Considered alternatives](#considered-alternatives)
-  - [[Alternative 1]](#alternative-1)
-  - [[Alternative 2]](#alternative-2)
 - [Stakeholder Interest & Feedback](#stakeholder-interest--feedback)
 - [References & acknowledgements](#references--acknowledgements)
 
 ### Introduction
 
-`wasi-nn` is a WASI API for performing ML inference. ML models are typically trained
-using a large data set, resulting in one or more files that describe the model's weights. The model
-is then used to compute an "inference," e.g., the probabilities of classifying an image as a set of
-tags. This API is concerned initially with inference, not training.
+`wasi-nn` is a WASI API for performing ML inference. Its name derives from the fact that ML models
+are also known as neural networks (`nn`). ML models are typically trained using a large data set,
+resulting in one or more files that describe the model's weights. The model is then used to compute
+an "inference," e.g., the probabilities of classifying an image as a set of tags. This API is
+concerned initially with inference, not training.
 
 Why expose ML inference as a WASI API? Though the functionality of inference can be encoded into
 WebAssembly, there are two primary motivations for `wasi-nn`:
@@ -115,7 +110,7 @@ used to solve the given problem.
 
 ### Detailed design discussion
 
-For the details of the API, see [wasi-nn.wit.md].
+For the details of the API, see [wasi-nn.wit.md](wasi-nn.wit.md).
 
 <!--
 This section should mostly refer to the .wit.md file that specifies the API. This section is for
@@ -148,9 +143,9 @@ More "tricky" design choices fit here.
 There are other ways to perform ML inference from a WebAssembly program:
 
 1. a user could specify a __custom host API__ for ML tasks; this is similar to the approach taken
-   [here](TODO). The advantages and disadvantages are in line with other "spec vs. custom"
-   trade-offs: the user can precisely tailor the API to their use case, etc., but will not be able
-   to switch easily between implementations.
+   [here](https://github.com/second-state/wasmedge_tensorflow_interface). The advantages and
+   disadvantages are in line with other "spec vs. custom" trade-offs: the user can precisely tailor
+   the API to their use case, etc., but will not be able to switch easily between implementations.
 2. a user could __compile a framework and/or model to WebAssembly__; this is similar to
    [here](https://github.com/sonos/tract) and
    [here](https://blog.tensorflow.org/2020/03/introducing-webassembly-backend-for-tensorflow-js.html).
@@ -173,4 +168,4 @@ Many thanks for valuable feedback and advice from:
 
 - [Brian Jones](https://github.com/brianjjones)
 - [Radu Matei](https://github.com/radu-matei)
-- [Steve Schoettler](TODO)
+- [Steve Schoettler](https://github.com/stevelr)
