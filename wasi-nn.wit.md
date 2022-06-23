@@ -107,10 +107,10 @@ index:
 
 ```wit
 // Define the inputs to use for inference.
-set-input: function(ctx: graph-execution-context, index: u32, tensor: tensor) -> expected<_, error>
+set-input: function(ctx: graph-execution-context, index: u32, tensor: tensor) -> expected<unit, error>
 
 // Compute the inference on the given inputs.
-compute: function(ctx: graph-execution-context) -> expected<_, error>
+compute: function(ctx: graph-execution-context) -> expected<unit, error>
 
 // Extract the outputs after inference.
 get-output: function(ctx: graph-execution-context, index: u32) -> expected<tensor, error>
