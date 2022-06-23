@@ -11,8 +11,8 @@ learning (ML).
 
 ### Champions
 
-- [Andrew Brown]: https://github.com/abrown
-- [Mingqiu Sun]: https://github.com/mingqiusun
+- [Andrew Brown](https://github.com/abrown)
+- [Mingqiu Sun](https://github.com/mingqiusun)
 
 ### Phase 4 Advancement Criteria
 
