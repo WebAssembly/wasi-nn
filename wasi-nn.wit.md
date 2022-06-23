@@ -33,7 +33,7 @@ enum tensor-type {
 
 // The tensor data.
 //
-// Initially coneived as a sparse representation, each empty cell would be filled with zeros and
+// Initially conceived as a sparse representation, each empty cell would be filled with zeros and
 // the array length must match the product of all of the dimensions and the number of bytes in the
 // type (e.g., a 2x2 tensor with 4-byte f32 elements would have a data array of length 16).
 // Naturally, this representation requires some knowledge of how to lay out data in memory--e.g.,
@@ -125,7 +125,7 @@ enum error {
     success,
     // Caller module passed an invalid argument.
     invalid-argument,
-    // Invalid encocing.
+    // Invalid encoding.
     invalid-encoding,
     // Caller module is missing a memory export.
     missing-memory,
