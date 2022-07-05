@@ -95,7 +95,7 @@ An inference "session" is encapsulated by a `graph-execution-context`. This stru
 `graph` to input tensors before `compute`-ing an inference:
 
 ```wit
-//
+// Bind a `graph` to the input and output tensors for an inference.
 resource graph-execution-context
 
 // Create an execution instance of a loaded graph.
