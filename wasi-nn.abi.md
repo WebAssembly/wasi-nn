@@ -71,6 +71,9 @@ Size: 1, Alignment: 1
 - <a href="graph_encoding.tensorflow" name="graph_encoding.tensorflow"></a> [`tensorflow`](#graph_encoding.tensorflow)
 
 
+- <a href="graph_encoding.pytorch" name="graph_encoding.pytorch"></a> [`pytorch`](#graph_encoding.pytorch)
+
+
 ## <a href="#execution_target" name="execution_target"></a> `execution-target`: enum
 
 
