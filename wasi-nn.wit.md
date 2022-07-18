@@ -87,7 +87,7 @@ enum execution-target {
 }
 
 // Load an opaque sequence of bytes to use for inference.
-load: function(builder: graph-builder-array, encoding: graph-encoding, target: execution-target) -> expected<graph, error>
+load: func(builder: graph-builder-array, encoding: graph-encoding, target: execution-target) -> expected<graph, error>
 ```
 
 ### Inference
@@ -100,7 +100,7 @@ An inference "session" is encapsulated by a `graph-execution-context`. This stru
 resource graph-execution-context
 
 // Create an execution instance of a loaded graph.
-init-execution-context: function(graph: graph) -> expected<graph-execution-context, error>
+init-execution-context: func(graph: graph) -> expected<graph-execution-context, error>
 ```
 
 Inputs and outputs to the inference request &mdash; `compute` &mdash; are identified by a numeric
@@ -108,13 +108,13 @@ index:
 
 ```wit
 // Define the inputs to use for inference.
-set-input: function(ctx: graph-execution-context, index: u32, tensor: tensor) -> expected<unit, error>
+set-input: func(ctx: graph-execution-context, index: u32, tensor: tensor) -> expected<unit, error>
 
 // Compute the inference on the given inputs.
-compute: function(ctx: graph-execution-context) -> expected<unit, error>
+compute: func(ctx: graph-execution-context) -> expected<unit, error>
 
 // Extract the outputs after inference.
-get-output: function(ctx: graph-execution-context, index: u32) -> expected<tensor, error>
+get-output: func(ctx: graph-execution-context, index: u32) -> expected<tensor, error>
 ```
 
 ### Errors
