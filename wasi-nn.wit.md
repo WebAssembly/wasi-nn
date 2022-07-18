@@ -114,7 +114,7 @@ set-input: func(ctx: graph-execution-context, index: u32, tensor: tensor) -> exp
 compute: func(ctx: graph-execution-context) -> expected<unit, error>
 
 // Extract the outputs after inference.
-get-output: func(ctx: graph-execution-context, index: u32) -> expected<tensor, error>
+get-output: func(ctx: graph-execution-context, index: u32) -> expected<tensor-data, error>
 ```
 
 ### Errors

@@ -175,5 +175,5 @@ Size: 1, Alignment: 1
 - <a href="#get_output.index" name="get_output.index"></a> `index`: `u32`
 ##### Result
 
-- expected<[`tensor`](#tensor), [`error`](#error)>
+- expected<[`tensor-data`](#tensor_data), [`error`](#error)>
 
