@@ -75,7 +75,8 @@ resource graph
 enum graph-encoding {
     openvino,
     onnx,
-    tensorflow
+    tensorflow,
+    pytorch
 }
 
 // Define where the graph should be executed.
