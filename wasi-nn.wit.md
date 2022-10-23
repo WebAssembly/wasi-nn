@@ -76,7 +76,8 @@ enum graph-encoding {
     openvino,
     onnx,
     tensorflow,
-    pytorch
+    pytorch,
+    tensorflowlite
 }
 
 // Define where the graph should be executed.

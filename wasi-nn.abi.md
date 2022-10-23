@@ -74,6 +74,9 @@ Size: 1, Alignment: 1
 - <a href="graph_encoding.pytorch" name="graph_encoding.pytorch"></a> [`pytorch`](#graph_encoding.pytorch)
 
 
+- <a href="graph_encoding.tensorflowlite" name="graph_encoding.tensorflowlite"></a> [`tensorflowlite`](#graph_encoding.tensorflowlite)
+
+
 ## <a href="#execution_target" name="execution_target"></a> `execution-target`: enum
 
 
