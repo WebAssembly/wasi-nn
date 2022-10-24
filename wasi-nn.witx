@@ -38,6 +38,7 @@
     $onnx
     $tensorflow
     $pytorch
+    $tensorflowlite
   )
 )
 (typename $execution_target
