@@ -58,6 +58,46 @@
     (param $target $execution_target)
     (result $error (expected $graph (error $nn_errno)))
   )
+    ;;; Load an opaque sequence of bytes to use for inference.
+    ;;;
+    ;;; This allows runtime implementations to support multiple graph encoding formats. For unsupported graph encodings,
+    ;;; return `errno::inval`.
+    (@interface func (export "load_by_name")
+      ;;; The name of the model to load from the model registry
+      (param $model_name (list u8))
+
+      (result $error (expected $graph (error $nn_errno)))
+    )
+
+    ;;; Allows registering a model via URI
+    ;;;
+    ;;; A model registry
+    (@interface func (export "register_model_uri")
+     ;;; The URI from where the model can be retrieved.
+     (param $uri (list u8))
+     (param $model_name (list u8))
+     ;;; The encoding of the graph.
+     (param $encoding $graph_encoding)
+     ;;; Where to execute the graph.
+     (param $target $execution_target)
+
+     (result $error (expected (error $nn_errno)))
+    )
+
+    ;;; Allows registering a model directly via bytes.
+    ;;;
+    ;;; A model registry
+    (@interface func (export "register_model_bytes")
+     ;;; The bytes necessary to build the graph.
+     (param $model_name (list u8))
+     (param $bytes (list (list u8)))
+     ;;; The encoding of the graph.
+     (param $encoding $graph_encoding)
+     ;;; Where to execute the graph.
+     (param $target $execution_target)
+
+     (result $error (expected (error $nn_errno)))
+    )
   (@interface func (export "init_execution_context")
     (param $graph $graph)
     (result $error (expected $graph_execution_context (error $nn_errno)))
