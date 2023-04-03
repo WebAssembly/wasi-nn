@@ -69,7 +69,7 @@
   ;;; return `errno::inval`.
   (@interface func (export "load_by_name")
      ;;; The name of the model to load from the model registry
-     (param $model_name (list u8))
+     (param $model_name $utf8name)
 
      (result $error (expected $graph (error $nn_errno)))
   )
