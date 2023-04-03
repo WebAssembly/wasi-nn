@@ -2,6 +2,8 @@
 ;; version for the official specification and documentation.
 
 (typename $buffer_size u32)
+(typename $status u32)
+
 (typename $nn_errno
   (enum (@witx tag u16)
     $success
@@ -10,6 +12,7 @@
     $missing_memory
     $busy
     $runtime_error
+    $model_too_large
   )
 )
 (typename $tensor_dimensions (list u32))
@@ -49,6 +52,8 @@
   )
 )
 (typename $graph_execution_context (handle))
+(typename $utf8name (list u8))
+(typename $utf8uri (list u8))
 
 (module $wasi_ephemeral_nn
   (import "memory" (memory))
@@ -58,46 +63,63 @@
     (param $target $execution_target)
     (result $error (expected $graph (error $nn_errno)))
   )
-    ;;; Load an opaque sequence of bytes to use for inference.
-    ;;;
-    ;;; This allows runtime implementations to support multiple graph encoding formats. For unsupported graph encodings,
-    ;;; return `errno::inval`.
-    (@interface func (export "load_by_name")
-      ;;; The name of the model to load from the model registry
-      (param $model_name (list u8))
-
-      (result $error (expected $graph (error $nn_errno)))
-    )
-
-    ;;; Allows registering a model via URI
-    ;;;
-    ;;; A model registry
-    (@interface func (export "register_model_uri")
-     ;;; The URI from where the model can be retrieved.
-     (param $uri (list u8))
+  ;;; Load an opaque sequence of bytes to use for inference.
+  ;;;
+  ;;; This allows runtime implementations to support multiple graph encoding formats. For unsupported graph encodings,
+  ;;; return `errno::inval`.
+  (@interface func (export "load_by_name")
+     ;;; The name of the model to load from the model registry
      (param $model_name (list u8))
-     ;;; The encoding of the graph.
-     (param $encoding $graph_encoding)
-     ;;; Where to execute the graph.
-     (param $target $execution_target)
 
-     (result $error (expected (error $nn_errno)))
-    )
+     (result $error (expected $graph (error $nn_errno)))
+  )
 
-    ;;; Allows registering a model directly via bytes.
-    ;;;
-    ;;; A model registry
-    (@interface func (export "register_model_bytes")
-     ;;; The bytes necessary to build the graph.
-     (param $model_name (list u8))
-     (param $bytes (list (list u8)))
-     ;;; The encoding of the graph.
-     (param $encoding $graph_encoding)
-     ;;; Where to execute the graph.
-     (param $target $execution_target)
+  ;;; Allows registering a model via URI
+  ;;;
+  (@interface func (export "register_model_uri")
+    ;;; The URI from where the model can be retrieved.
+    (param $uri $utf8uri)
+    (param $model_name $utf8name)
+    ;;; The encoding of the graph.
+    (param $encoding $graph_encoding)
+    ;;; Where to execute the graph.
+    (param $target $execution_target)
 
-     (result $error (expected (error $nn_errno)))
-    )
+    (result $error (expected (error $nn_errno)))
+  )
+
+  ;;; Allows registering a model directly via bytes.
+  ;;;
+  (@interface func (export "register_model_bytes")
+    ;;; The bytes necessary to build the graph.
+    (param $model_name $utf8name)
+    (param $builder $graph_builder_array)
+    ;;; The encoding of the graph.
+    (param $encoding $graph_encoding)
+    ;;; Where to execute the graph.
+    (param $target $execution_target)
+
+    (result $error (expected (error $nn_errno)))
+  )
+
+  ;;; Remove a model from the registry.
+  ;;;
+  (@interface func (export "unregister")
+    ;;; The bytes necessary to build the graph.
+    (param $model_name $utf8name)
+
+    (result $error (expected (error $nn_errno)))
+  )
+
+  ;;; Check if a model is registered with the registry.
+  ;;;
+  (@interface func (export "is_registered")
+    ;;; The bytes necessary to build the graph.
+    (param $model_name $utf8name)
+
+    (result $error (expected $status (error $nn_errno)))
+  )
+
   (@interface func (export "init_execution_context")
     (param $graph $graph)
     (result $error (expected $graph_execution_context (error $nn_errno)))
