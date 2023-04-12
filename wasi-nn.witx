@@ -52,8 +52,6 @@
   )
 )
 (typename $graph_execution_context (handle))
-(typename $utf8name (list u8))
-(typename $utf8uri (list u8))
 
 (module $wasi_ephemeral_nn
   (import "memory" (memory))
@@ -69,7 +67,7 @@
   ;;; return `errno::inval`.
   (@interface func (export "load_by_name")
      ;;; The name of the model to load from the model registry
-     (param $model_name $utf8name)
+     (param $model_name string)
 
      (result $error (expected $graph (error $nn_errno)))
   )
@@ -78,14 +76,12 @@
   ;;;
   (@interface func (export "register_named_model")
     ;;; The bytes necessary to build the graph.
-    (param $model_name $utf8name)
+    (param $model_name string)
     (param $builder $graph_builder_array)
     ;;; The encoding of the graph.
     (param $encoding $graph_encoding)
     ;;; Where to execute the graph.
     (param $target $execution_target)
-    ;;; How long to persist the model in the registry. A value of zero is forever.
-    (param $ttl u32)
 
     (result $error (expected (error $nn_errno)))
   )
@@ -94,7 +90,7 @@
   ;;;
   (@interface func (export "unregister")
     ;;; The bytes necessary to build the graph.
-    (param $model_name $utf8name)
+    (param $model_name string)
 
     (result $error (expected (error $nn_errno)))
   )
@@ -103,7 +99,7 @@
   ;;;
   (@interface func (export "is_registered")
     ;;; The bytes necessary to build the graph.
-    (param $model_name $utf8name)
+    (param $model_name string)
 
     (result $error (expected $status (error $nn_errno)))
   )
