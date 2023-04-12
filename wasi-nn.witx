@@ -76,7 +76,7 @@
 
   ;;; Registers a model from the binary form of its computation graph.
   ;;;
-  (@interface func (export "register_model_bytes")
+  (@interface func (export "register_named_model")
     ;;; The bytes necessary to build the graph.
     (param $model_name $utf8name)
     (param $builder $graph_builder_array)
