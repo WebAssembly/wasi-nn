@@ -74,21 +74,7 @@
      (result $error (expected $graph (error $nn_errno)))
   )
 
-  ;;; Allows registering a model via URI
-  ;;;
-  (@interface func (export "register_model_uri")
-    ;;; The URI from where the model can be retrieved.
-    (param $uri $utf8uri)
-    (param $model_name $utf8name)
-    ;;; The encoding of the graph.
-    (param $encoding $graph_encoding)
-    ;;; Where to execute the graph.
-    (param $target $execution_target)
-
-    (result $error (expected (error $nn_errno)))
-  )
-
-  ;;; Allows registering a model directly via bytes.
+  ;;; Registers a model from the binary form of its computation graph.
   ;;;
   (@interface func (export "register_model_bytes")
     ;;; The bytes necessary to build the graph.
@@ -98,6 +84,8 @@
     (param $encoding $graph_encoding)
     ;;; Where to execute the graph.
     (param $target $execution_target)
+    ;;; How long to persist the model in the registry. A value of zero is forever.
+    (param $ttl u32)
 
     (result $error (expected (error $nn_errno)))
   )
