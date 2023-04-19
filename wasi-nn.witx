@@ -52,7 +52,7 @@
   )
 )
 (typename $graph_execution_context (handle))
-(typename $model_list (list string))
+(typename $model_list (list (list u8)))
 
 (module $wasi_ephemeral_nn
   (import "memory" (memory))
