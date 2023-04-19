@@ -13,6 +13,7 @@
     $busy
     $runtime_error
     $model_too_large
+    $model_not_found
   )
 )
 (typename $tensor_dimensions (list u32))
@@ -52,7 +53,8 @@
   )
 )
 (typename $graph_execution_context (handle))
-(typename $model_list (list (list u8)))
+(typename $model_list (@witx pointer (@witx pointer u8)))
+(typename $model_buffer (@witx pointer u8))
 
 (module $wasi_ephemeral_nn
   (import "memory" (memory))
@@ -90,7 +92,9 @@
   ;;; Retrieve a list of models from the registry.
   ;;;
   (@interface func (export "get_model_list")
+    (param $buffer $model_buffer)
     (param $models $model_list)
+    (param $length $buffer_size)
     (result $error (expected (error $nn_errno)))
   )
 
