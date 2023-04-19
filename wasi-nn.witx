@@ -52,6 +52,7 @@
   )
 )
 (typename $graph_execution_context (handle))
+(typename $model_list (list string))
 
 (module $wasi_ephemeral_nn
   (import "memory" (memory))
@@ -86,23 +87,18 @@
     (result $error (expected (error $nn_errno)))
   )
 
-  ;;; Remove a model from the registry.
+  ;;; Retrieve a list of models from the registry.
   ;;;
-  (@interface func (export "unregister")
-    ;;; The bytes necessary to build the graph.
-    (param $model_name string)
-
+  (@interface func (export "get_model_list")
+    (param $models $model_list)
     (result $error (expected (error $nn_errno)))
   )
 
-  ;;; Check if a model is registered with the registry.
-  ;;;
-  (@interface func (export "is_registered")
-    ;;; The bytes necessary to build the graph.
-    (param $model_name string)
-
-    (result $error (expected $status (error $nn_errno)))
-  )
+   ;;; Retrieve a list of models from the registry.
+   ;;;
+   (@interface func (export "get_model_list_sizes")
+     (result $error (expected (tuple $buffer_size $buffer_size) (error $nn_errno)))
+   )
 
   (@interface func (export "init_execution_context")
     (param $graph $graph)
