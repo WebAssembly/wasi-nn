@@ -89,8 +89,8 @@ browser deals with image or video encoding.
 
 ### Non-goals
 
-wasi-nn is not designed to provide support for individual ML operations (a "model builder" API). The
-ML field  is still evolving rapidly, with new operations and network topologies emerging
+`wasi-nn` is not designed to provide support for individual ML operations (a "model builder" API).
+The ML field  is still evolving rapidly, with new operations and network topologies emerging
 continuously. It would be a challenge to define an evolving set of operations to support in the API.
 Instead, our approach is to start with a "model loader" API, inspired by WebNN’s model loader
 proposal.
