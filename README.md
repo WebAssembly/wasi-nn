@@ -89,24 +89,37 @@ browser deals with image or video encoding.
 
 ### Non-goals
 
-wasi-nn is not designed to provide support for individual ML operations (a "model builder" API). The
-ML field  is still evolving rapidly, with new operations and network topologies emerging
+`wasi-nn` is not designed to provide support for individual ML operations (a "model builder" API).
+The ML field  is still evolving rapidly, with new operations and network topologies emerging
 continuously. It would be a challenge to define an evolving set of operations to support in the API.
 Instead, our approach is to start with a "model loader" API, inspired by WebNN’s model loader
 proposal.
 
 ### API walk-through
 
-The following example describes how a user would use `wasi-nn` to classify an image.
+The following example describes how a user would use `wasi-nn`:
 
-```
-TODO
+```rust
+// Load the model.
+let encoding = wasi_nn::GRAPH_ENCODING_...;
+let target = wasi_nn::EXECUTION_TARGET_CPU;
+let graph = wasi_nn::load(&[bytes, more_bytes], encoding, target);
+
+// Configure the execution context.
+let context = wasi_nn::init_execution_context(graph);
+let tensor = wasi_nn::Tensor { ... };
+wasi_nn::set_input(context, 0, tensor);
+
+// Compute the inference.
+wasi_nn::compute(context);
+wasi_nn::get_output(context, 0, &mut output_buffer, output_buffer.len());
 ```
 
-<!--
-More use cases go here: provide example code snippets and diagrams explaining how the API would be
-used to solve the given problem.
--->
+Note that the details above will depend on the model and backend used; the pseudo-Rust simply
+illustrates the general idea, minus any error-checking. Consult the
+[AssemblyScript](https://github.com/bytecodealliance/wasi-nn/tree/main/assemblyscript/examples) and
+[Rust](https://github.com/bytecodealliance/wasi-nn/tree/main/rust/examples) bindings for more
+detailed examples.
 
 ### Detailed design discussion
 
