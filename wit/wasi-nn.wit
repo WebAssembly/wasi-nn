@@ -90,5 +90,11 @@ interface errors {
         busy,
         // Runtime Error.
         runtime-error,
+        // Unsupported operation
+        unsupported-operation,
+        // Model too large
+        model-too-large,
+        // Model not found
+        model-not-found
     }
 }

@@ -12,6 +12,7 @@
     $missing_memory
     $busy
     $runtime_error
+    $unsupported_operation
     $model_too_large
     $model_not_found
   )
