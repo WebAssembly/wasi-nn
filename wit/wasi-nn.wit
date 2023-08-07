@@ -2,8 +2,8 @@ package wasi:nn
 
 world inference {
     import tensor
-    //import graph
-    //import execution
+    import graph
+    import execution
     import errors
 
     export run: func()-> result<_,string>
