@@ -5,13 +5,9 @@ world inference {
     import graph
     import execution
     import errors
-
-    export run: func()-> result<_,string>
 }
 
 interface tensor {
-    use errors.{error}
-
     type tensor-dimensions = list<u32>
     type tensor-data = list<u8>
 
@@ -49,7 +45,8 @@ interface graph {
         onnx,
         tensorflow,
         pytorch,
-        tensorflowlite
+        tensorflowlite,
+        autodetect,
     }
 
     enum execution-target {
@@ -70,6 +67,7 @@ interface execution {
     type graph-execution-context = u32
     init-execution-context: func(graph: graph) -> result<graph-execution-context, error>
     set-input: func(ctx: graph-execution-context, index: u32, tensor: tensor) -> result<_, error>
+    set-input-by-name: func(ctx: graph-execution-context, name: string, tensor: tensor) -> result<_, error>
     compute: func(ctx: graph-execution-context) -> result<_, error>
     get-output: func(ctx: graph-execution-context, index: u32) -> result<list<tensor-data>, error>
     eval: func(tensors: list<tensor>) -> result<list<tensor>, error>
@@ -78,15 +76,10 @@ interface execution {
 
 interface errors {
     enum error {
-        // No error occurred.
-        success,
         // Caller module passed an invalid argument.
         invalid-argument,
         // Invalid encoding.
         invalid-encoding,
-        // Caller module is missing a memory export.
-        missing-memory,
-        // Device or resource busy.
         busy,
         // Runtime Error.
         runtime-error,
