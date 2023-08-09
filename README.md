@@ -123,7 +123,7 @@ detailed examples.
 
 ### Detailed design discussion
 
-For the details of the API, see [wasi-nn.wit.md](wasi-nn.wit.md).
+For the details of the API, see [wasi-nn.wit](wit/wasi-nn.wit).
 
 <!--
 This section should mostly refer to the .wit.md file that specifies the API. This section is for

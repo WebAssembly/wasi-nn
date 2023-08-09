@@ -2,6 +2,8 @@
 ;; version for the official specification and documentation.
 
 (typename $buffer_size u32)
+(typename $status u32)
+
 (typename $nn_errno
   (enum (@witx tag u16)
     $success
@@ -10,6 +12,9 @@
     $missing_memory
     $busy
     $runtime_error
+    $unsupported_operation
+    $model_too_large
+    $model_not_found
   )
 )
 (typename $tensor_dimensions (list u32))
@@ -39,6 +44,7 @@
     $tensorflow
     $pytorch
     $tensorflowlite
+    $autodetect
   )
 )
 (typename $execution_target
@@ -58,6 +64,17 @@
     (param $target $execution_target)
     (result $error (expected $graph (error $nn_errno)))
   )
+  ;;; Load an opaque sequence of bytes to use for inference.
+  ;;;
+  ;;; This allows runtime implementations to support multiple graph encoding formats. For unsupported graph encodings,
+  ;;; return `errno::inval`.
+  (@interface func (export "load_by_name")
+     ;;; The name of the model to load from the model registry
+     (param $model_name string)
+
+     (result $error (expected $graph (error $nn_errno)))
+  )
+
   (@interface func (export "init_execution_context")
     (param $graph $graph)
     (result $error (expected $graph_execution_context (error $nn_errno)))
