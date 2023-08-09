@@ -55,8 +55,6 @@
   )
 )
 (typename $graph_execution_context (handle))
-(typename $model_list (@witx pointer (@witx pointer u8)))
-(typename $model_buffer (@witx pointer u8))
 
 (module $wasi_ephemeral_nn
   (import "memory" (memory))
@@ -87,12 +85,6 @@
     (param $tensor $tensor)
     (result $error (expected (error $nn_errno)))
   )
-  (@interface func (export "set_input_by_name")
-      (param $context $graph_execution_context)
-      (param $name string)
-      (param $tensor $tensor)
-      (result $error (expected (error $nn_errno)))
-    )
   (@interface func (export "get_output")
     (param $context $graph_execution_context)
     (param $index u32)
