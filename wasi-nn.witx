@@ -1,4 +1,4 @@
-;; This WITX version of the wasi-nn API is retained for consistency only. See the `wasi-nn.wit`
+;; This WITX version of the wasi-nn API is retained for consistency only. See the `wit/wasi-nn.wit`
 ;; version for the official specification and documentation.
 
 (typename $buffer_size u32)
