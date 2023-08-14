@@ -125,7 +125,7 @@ interface inference {
     compute: func(ctx: graph-execution-context) -> result<_, error>
 
     /// Extract the outputs after inference.
-    get-output: func(ctx: graph-execution-context, index: u32) -> result<list<tensor-data>, error>
+    get-output: func(ctx: graph-execution-context, index: u32) -> result<tensor-data, error>
 }
 
 /// TODO: create function-specific errors (https://github.com/WebAssembly/wasi-nn/issues/42)
