@@ -11,8 +11,8 @@
     $busy
     $runtime_error
     $unsupported_operation
-    $model_too_large
-    $model_not_found
+    $too_large
+    $not_found
   )
 )
 (typename $tensor_dimensions (list u32))
@@ -63,7 +63,7 @@
     (result $error (expected $graph (error $nn_errno)))
   )
   (@interface func (export "load_by_name")
-     (param $model_name string)
+     (param $name string)
      (result $error (expected $graph (error $nn_errno)))
   )
   (@interface func (export "init_execution_context")

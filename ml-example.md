@@ -2,7 +2,7 @@
 <p><code>wasi-nn</code> is a WASI API for performing machine learning (ML) inference. The API is not (yet)
 capable of performing ML training. WebAssembly programs that want to use a host's ML
 capabilities can access these capabilities through <code>wasi-nn</code>'s core abstractions: <em>graphs</em> and
-<em>tensors</em>. A user <a href="#load"><code>load</code></a>s a model -- instantiated as a <em>graph</em> -- to use in an ML <em>backend</em>.
+<em>tensors</em>. A user <a href="#load"><code>load</code></a>s an ML model -- instantiated as a <em>graph</em> -- to use in an ML <em>backend</em>.
 Then, the user passes <em>tensor</em> inputs to the <em>graph</em>, computes the inference, and retrieves the
 <em>tensor</em> outputs.</p>
 <p>This example world shows how to use these primitives together.</p>
@@ -62,8 +62,8 @@ memory--e.g., using row-major ordering--and could perhaps be improved.</p>
 <li><a name="error.busy"><code>busy</code></a></li>
 <li><a name="error.runtime_error"><code>runtime-error</code></a></li>
 <li><a name="error.unsupported_operation"><code>unsupported-operation</code></a></li>
-<li><a name="error.model_too_large"><code>model-too-large</code></a></li>
-<li><a name="error.model_not_found"><code>model-not-found</code></a></li>
+<li><a name="error.too_large"><code>too-large</code></a></li>
+<li><a name="error.not_found"><code>not-found</code></a></li>
 </ul>
 <h2><a name="wasi:nn_graph">Import interface wasi:nn/graph</a></h2>
 <p>A <a href="#graph"><code>graph</code></a> is a loaded instance of a specific ML model (e.g., MobileNet) for a specific ML
@@ -119,18 +119,18 @@ graph IR in parts (e.g., OpenVINO stores its IR and weights separately).</p>
 <ul>
 <li><a name="load.0"></a> result&lt;<a href="#graph"><a href="#graph"><code>graph</code></a></a>, <a href="#error"><a href="#error"><code>error</code></a></a>&gt;</li>
 </ul>
-<h4><a name="load_named_model"><code>load-named-model: func</code></a></h4>
+<h4><a name="load_by_name"><code>load-by-name: func</code></a></h4>
 <p>Load a <a href="#graph"><code>graph</code></a> by name.</p>
 <p>How the host expects the names to be passed and how it stores the graphs for retrieval via
 this function is <strong>implementation-specific</strong>. This allows hosts to choose name schemes that
 range from simple to complex (e.g., URLs?) and caching mechanisms of various kinds.</p>
 <h5>Params</h5>
 <ul>
-<li><a name="load_named_model.name"><code>name</code></a>: <code>string</code></li>
+<li><a name="load_by_name.name"><code>name</code></a>: <code>string</code></li>
 </ul>
 <h5>Return values</h5>
 <ul>
-<li><a name="load_named_model.0"></a> result&lt;<a href="#graph"><a href="#graph"><code>graph</code></a></a>, <a href="#error"><a href="#error"><code>error</code></a></a>&gt;</li>
+<li><a name="load_by_name.0"></a> result&lt;<a href="#graph"><a href="#graph"><code>graph</code></a></a>, <a href="#error"><a href="#error"><code>error</code></a></a>&gt;</li>
 </ul>
 <h2><a name="wasi:nn_inference">Import interface wasi:nn/inference</a></h2>
 <p>An inference &quot;session&quot; is encapsulated by a <a href="#graph_execution_context"><code>graph-execution-context</code></a>. This structure binds a
