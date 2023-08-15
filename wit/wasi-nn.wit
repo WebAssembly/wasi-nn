@@ -25,11 +25,11 @@ interface tensor {
 
     /// The type of the elements in a tensor.
     enum tensor-type {
-        fp16,
-        fp32,
-        bf16,
-        up8,
-        ip32
+        FP16,
+        FP32,
+        BF16,
+        U8,
+        I32
     }
 
     /// The tensor data.
