@@ -1,4 +1,4 @@
-<h1><a name="ml_example">World ml-example</a></h1>
+<h1><a name="ml">World ml</a></h1>
 <p><code>wasi-nn</code> is a WASI API for performing machine learning (ML) inference. The API is not (yet)
 capable of performing ML training. WebAssembly programs that want to use a host's ML
 capabilities can access these capabilities through <code>wasi-nn</code>'s core abstractions: <em>graphs</em> and
