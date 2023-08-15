@@ -8,7 +8,7 @@ package wasi:nn
 /// _tensor_ outputs.
 ///
 /// This example world shows how to use these primitives together.
-world ml-example {
+world ml {
     import tensor
     import graph
     import inference
