@@ -24,11 +24,11 @@ Then, the user passes <em>tensor</em> inputs to the <em>graph</em>, computes the
 <p>The type of the elements in a tensor.</p>
 <h5>Enum Cases</h5>
 <ul>
-<li><a name="tensor_type.fp16"><code>fp16</code></a></li>
-<li><a name="tensor_type.fp32"><code>fp32</code></a></li>
-<li><a name="tensor_type.bf16"><code>bf16</code></a></li>
-<li><a name="tensor_type.up8"><code>up8</code></a></li>
-<li><a name="tensor_type.ip32"><code>ip32</code></a></li>
+<li><a name="tensor_type.fp16"><code>FP16</code></a></li>
+<li><a name="tensor_type.fp32"><code>FP32</code></a></li>
+<li><a name="tensor_type.bf16"><code>BF16</code></a></li>
+<li><a name="tensor_type.u8"><code>U8</code></a></li>
+<li><a name="tensor_type.i32"><code>I32</code></a></li>
 </ul>
 <h4><a name="tensor_dimensions"><code>type tensor-dimensions</code></a></h4>
 <p><a href="#tensor_dimensions"><a href="#tensor_dimensions"><code>tensor-dimensions</code></a></a></p>
