@@ -29,7 +29,8 @@ interface tensor {
         FP32,
         BF16,
         U8,
-        I32
+        I32,
+        BYTES,
     }
 
     /// The tensor data.

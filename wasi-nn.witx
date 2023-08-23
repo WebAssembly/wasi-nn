@@ -22,6 +22,7 @@
     $f32
     $u8
     $i32
+    $bytes
   )
 )
 (typename $tensor_data (list u8))
