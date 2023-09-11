@@ -20,9 +20,11 @@
   (enum (@witx tag u8)
     $f16
     $f32
+    $f64
     $u8
     $i32
     $bytes
+    $i64
   )
 )
 (typename $tensor_data (list u8))
