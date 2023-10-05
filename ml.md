@@ -20,6 +20,11 @@ Then, the user passes <em>tensor</em> inputs to the <em>graph</em>, computes the
 <p>All inputs and outputs to an ML inference are represented as <a href="#tensor"><code>tensor</code></a>s.</p>
 <hr />
 <h3>Types</h3>
+<h4><a name="tensor_dimensions"><code>type tensor-dimensions</code></a></h4>
+<p><a href="#tensor_dimensions"><a href="#tensor_dimensions"><code>tensor-dimensions</code></a></a></p>
+<p>The dimensions of a tensor.
+<p>The array length matches the tensor rank and each element in the array describes the size of
+each dimension</p>
 <h4><a name="tensor_type"><code>enum tensor-type</code></a></h4>
 <p>The type of the elements in a tensor.</p>
 <h5>Enum Cases</h5>
@@ -32,11 +37,6 @@ Then, the user passes <em>tensor</em> inputs to the <em>graph</em>, computes the
 <li><a name="tensor_type.i32"><code>I32</code></a></li>
 <li><a name="tensor_type.i64"><code>I64</code></a></li>
 </ul>
-<h4><a name="tensor_dimensions"><code>type tensor-dimensions</code></a></h4>
-<p><a href="#tensor_dimensions"><a href="#tensor_dimensions"><code>tensor-dimensions</code></a></a></p>
-<p>The dimensions of a tensor.
-<p>The array length matches the tensor rank and each element in the array describes the size of
-each dimension</p>
 <h4><a name="tensor_data"><code>type tensor-data</code></a></h4>
 <p><a href="#tensor_data"><a href="#tensor_data"><code>tensor-data</code></a></a></p>
 <p>The tensor data.
@@ -78,7 +78,11 @@ framework (e.g., TensorFlow):</p>
 #### <a name="tensor">`type tensor`</a>
 [`tensor`](#tensor)
 <p>
-#### <a name="graph_encoding">`enum graph-encoding`</a>
+#### <a name="graph">`type graph`</a>
+`u32`
+<p>An execution graph for performing inference (i.e., a model).
+<p>TODO: replace with <code>resource</code> (https://github.com/WebAssembly/wasi-nn/issues/47).</p>
+<h4><a name="graph_encoding"><code>enum graph-encoding</code></a></h4>
 <p>Describes the encoding of the graph. This allows the API to be implemented by various
 backends that encode (i.e., serialize) their graph IR with different formats.</p>
 <h5>Enum Cases</h5>
@@ -90,15 +94,6 @@ backends that encode (i.e., serialize) their graph IR with different formats.</p
 <li><a name="graph_encoding.tensorflowlite"><code>tensorflowlite</code></a></li>
 <li><a name="graph_encoding.autodetect"><code>autodetect</code></a></li>
 </ul>
-<h4><a name="graph_builder"><code>type graph-builder</code></a></h4>
-<p><a href="#graph_builder"><a href="#graph_builder"><code>graph-builder</code></a></a></p>
-<p>The graph initialization data.
-<p>This gets bundled up into an array of buffers because implementing backends may encode their
-graph IR in parts (e.g., OpenVINO stores its IR and weights separately).</p>
-<h4><a name="graph"><code>type graph</code></a></h4>
-<p><code>u32</code></p>
-<p>An execution graph for performing inference (i.e., a model).
-<p>TODO: replace with <code>resource</code> (https://github.com/WebAssembly/wasi-nn/issues/47).</p>
 <h4><a name="execution_target"><code>enum execution-target</code></a></h4>
 <p>Define where the graph should be executed.</p>
 <h5>Enum Cases</h5>
@@ -107,6 +102,11 @@ graph IR in parts (e.g., OpenVINO stores its IR and weights separately).</p>
 <li><a name="execution_target.gpu"><code>gpu</code></a></li>
 <li><a name="execution_target.tpu"><code>tpu</code></a></li>
 </ul>
+<h4><a name="graph_builder"><code>type graph-builder</code></a></h4>
+<p><a href="#graph_builder"><a href="#graph_builder"><code>graph-builder</code></a></a></p>
+<p>The graph initialization data.
+<p>This gets bundled up into an array of buffers because implementing backends may encode their
+graph IR in parts (e.g., OpenVINO stores its IR and weights separately).</p>
 <hr />
 <h3>Functions</h3>
 <h4><a name="load"><code>load: func</code></a></h4>
