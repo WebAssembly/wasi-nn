@@ -172,7 +172,7 @@ range from simple to complex (e.g., URLs?) and caching mechanisms of various kin
 <h5>Params</h5>
 <ul>
 <li><a name="set_input.ctx"><code>ctx</code></a>: <a href="#graph_execution_context"><a href="#graph_execution_context"><code>graph-execution-context</code></a></a></li>
-<li><a name="set_input.index"><code>index</code></a>: <code>u32</code></li>
+<li><a name="set_input.name"><code>name</code></a>: <code>string</code></li>
 <li><a name="set_input.tensor"><a href="#tensor"><code>tensor</code></a></a>: <a href="#tensor"><a href="#tensor"><code>tensor</code></a></a></li>
 </ul>
 <h5>Return values</h5>
@@ -196,7 +196,7 @@ expectation could be removed as a part of https://github.com/WebAssembly/wasi-nn
 <h5>Params</h5>
 <ul>
 <li><a name="get_output.ctx"><code>ctx</code></a>: <a href="#graph_execution_context"><a href="#graph_execution_context"><code>graph-execution-context</code></a></a></li>
-<li><a name="get_output.index"><code>index</code></a>: <code>u32</code></li>
+<li><a name="get_output.name"><code>name</code></a>: <code>string</code></li>
 </ul>
 <h5>Return values</h5>
 <ul>
