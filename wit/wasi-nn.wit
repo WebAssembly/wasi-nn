@@ -75,6 +75,7 @@ interface graph {
         tensorflow,
         pytorch,
         tensorflowlite,
+        kserve,
         autodetect,
     }
 
