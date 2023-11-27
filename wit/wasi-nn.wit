@@ -133,12 +133,13 @@ interface inference {
 
 /// TODO: create function-specific errors (https://github.com/WebAssembly/wasi-nn/issues/42)
 interface errors {
-    enum error {
+    enum error-code {
         // Caller module passed an invalid argument.
         invalid-argument,
         // Invalid encoding.
         invalid-encoding,
-        busy,
+        // The operation timed out.
+        timeout,
         // Runtime Error.
         runtime-error,
         // Unsupported operation.
@@ -146,6 +147,21 @@ interface errors {
         // Graph is too large.
         too-large,
         // Graph not found.
-        not-found
+        not-found,
+        // The operation is insecure or has insufficient privilege to be performed.
+        // e.g., cannot access a hardware feature requested
+        security,
+        // The operation failed for an unspecified reason.
+        unknown
+    }
+
+    resource error {
+        constructor(error: error-code, data: string);
+
+        /// Return the error code.
+        error: func() -> error-code;
+
+        /// Errors can propagated with backend specific status through a string value.
+        data: func() -> string;
     }
 }
