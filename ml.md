@@ -109,22 +109,22 @@ memory--e.g., using row-major ordering--and could perhaps be improved.</p>
 <h4><a name="constructor_error"><code>[constructor]error: func</code></a></h4>
 <h5>Params</h5>
 <ul>
-<li><a name="constructor_error.error"><a href="#error"><code>error</code></a></a>: <a href="#error_code"><a href="#error_code"><code>error-code</code></a></a></li>
+<li><a name="constructor_error.code"><code>code</code></a>: <a href="#error_code"><a href="#error_code"><code>error-code</code></a></a></li>
 <li><a name="constructor_error.data"><code>data</code></a>: <code>string</code></li>
 </ul>
 <h5>Return values</h5>
 <ul>
 <li><a name="constructor_error.0"></a> own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;</li>
 </ul>
-<h4><a name="method_error.error"><code>[method]error.error: func</code></a></h4>
+<h4><a name="method_error.code"><code>[method]error.code: func</code></a></h4>
 <p>Return the error code.</p>
 <h5>Params</h5>
 <ul>
-<li><a name="method_error.error.self"><code>self</code></a>: borrow&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;</li>
+<li><a name="method_error.code.self"><code>self</code></a>: borrow&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;</li>
 </ul>
 <h5>Return values</h5>
 <ul>
-<li><a name="method_error.error.0"></a> <a href="#error_code"><a href="#error_code"><code>error-code</code></a></a></li>
+<li><a name="method_error.code.0"></a> <a href="#error_code"><a href="#error_code"><code>error-code</code></a></a></li>
 </ul>
 <h4><a name="method_error.data"><code>[method]error.data: func</code></a></h4>
 <p>Errors can propagated with backend specific status through a string value.</p>

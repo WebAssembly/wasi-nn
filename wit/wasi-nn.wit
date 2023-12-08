@@ -156,10 +156,10 @@ interface errors {
     }
 
     resource error {
-        constructor(error: error-code, data: string);
+        constructor(code: error-code, data: string);
 
         /// Return the error code.
-        error: func() -> error-code;
+        code: func() -> error-code;
 
         /// Errors can propagated with backend specific status through a string value.
         data: func() -> string;
