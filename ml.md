@@ -214,6 +214,7 @@ backends that encode (i.e., serialize) their graph IR with different formats.</p
 <li><a name="graph_encoding.tensorflow"><code>tensorflow</code></a></li>
 <li><a name="graph_encoding.pytorch"><code>pytorch</code></a></li>
 <li><a name="graph_encoding.tensorflowlite"><code>tensorflowlite</code></a></li>
+<li><a name="graph_encoding.ggml"><code>ggml</code></a></li>
 <li><a name="graph_encoding.autodetect"><code>autodetect</code></a></li>
 </ul>
 <h4><a name="execution_target"><code>enum execution-target</code></a></h4>
