@@ -44,7 +44,8 @@ interface tensor {
     type tensor-data = list<u8>;
 
     resource tensor {
-        constructor(dimensions: tensor-dimensions, ty: tensor-type, data: tensor-data);
+        constructor(dimensions: tensor-dimensions, ty: tensor-type, data: tensor-data,
+            location: option<execution-target>);
 
         // Describe the size of the tensor (e.g., 2x2x2x2 -> [2, 2, 2, 2]). To represent a tensor
         // containing a single value, use `[1]` for the tensor dimensions.
@@ -53,9 +54,20 @@ interface tensor {
         // Describe the type of element in the tensor (e.g., `f32`).
         ty: func() -> tensor-type;
 
-        // Return the tensor data.
+        // Describe where the tensor is currently located (e.g., `cpu`, `gpu`, `tpu`).
+        location: func() -> execution-target;
+
+        // Return the tensor data. If the tensor is located on a device other than the CPU, this
+        // operation may result in an expensive data copy operation.
         data: func() -> tensor-data;
     }
+
+    /// Alternately, construct a tensor that lives exclusively on a specific device.
+    create_on_device: func(dimensions: tensor-dimensions, ty: tensor-type, data: tensor-data,
+        location: execution-target, backend: graph-encoding) -> result<tensor, error>;
+
+    // TODO: rename exection-target to... device?
+    // TODO: rename graph-encoding to... backend?
 }
 
 /// A `graph` is a loaded instance of a specific ML model (e.g., MobileNet) for a specific ML
