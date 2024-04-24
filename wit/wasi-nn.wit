@@ -53,8 +53,17 @@ interface tensor {
         // Describe the type of element in the tensor (e.g., `f32`).
         ty: func() -> tensor-type;
 
-        // Return the tensor data.
-        data: func() -> tensor-data;
+        // Return the tensor data. Returns an error if not a cpu tensor.
+        data: func() -> result<tensor-data, error>;
+
+        //Copies tensor to cpu.
+        cpu: func() -> tensor;
+
+        //Copies tensor to gpu.
+        gpu: func() -> tensor;
+
+        //Copies tensor to device
+        to: func(device: execution-target) -> tensor;
     }
 }
 
