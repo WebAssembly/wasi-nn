@@ -1,4 +1,4 @@
-package wasi:nn;
+package wasi:nn@0.2.0;
 
 /// `wasi-nn` is a WASI API for performing machine learning (ML) inference. The API is not (yet)
 /// capable of performing ML training. WebAssembly programs that want to use a host's ML
