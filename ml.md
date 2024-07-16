@@ -9,14 +9,14 @@ Then, the user passes <em>tensor</em> inputs to the <em>graph</em>, computes the
 <ul>
 <li>Imports:
 <ul>
-<li>interface <a href="#wasi:nn_tensor_0.2.0_rc_2024_06_25"><code>wasi:nn/tensor@0.2.0-rc-2024-06-25</code></a></li>
-<li>interface <a href="#wasi:nn_errors_0.2.0_rc_2024_06_25"><code>wasi:nn/errors@0.2.0-rc-2024-06-25</code></a></li>
-<li>interface <a href="#wasi:nn_inference_0.2.0_rc_2024_06_25"><code>wasi:nn/inference@0.2.0-rc-2024-06-25</code></a></li>
-<li>interface <a href="#wasi:nn_graph_0.2.0_rc_2024_06_25"><code>wasi:nn/graph@0.2.0-rc-2024-06-25</code></a></li>
+<li>interface <a href="#wasi_nn_tensor_0_2_0_rc_2024_06_25"><code>wasi:nn/tensor@0.2.0-rc-2024-06-25</code></a></li>
+<li>interface <a href="#wasi_nn_errors_0_2_0_rc_2024_06_25"><code>wasi:nn/errors@0.2.0-rc-2024-06-25</code></a></li>
+<li>interface <a href="#wasi_nn_inference_0_2_0_rc_2024_06_25"><code>wasi:nn/inference@0.2.0-rc-2024-06-25</code></a></li>
+<li>interface <a href="#wasi_nn_graph_0_2_0_rc_2024_06_25"><code>wasi:nn/graph@0.2.0-rc-2024-06-25</code></a></li>
 </ul>
 </li>
 </ul>
-<h2><a name="wasi:nn_tensor_0.2.0_rc_2024_06_25"></a>Import interface wasi:nn/tensor@0.2.0-rc-2024-06-25</h2>
+<h2><a name="wasi_nn_tensor_0_2_0_rc_2024_06_25"></a>Import interface wasi:nn/tensor@0.2.0-rc-2024-06-25</h2>
 <p>All inputs and outputs to an ML inference are represented as <a href="#tensor"><code>tensor</code></a>s.</p>
 <hr />
 <h3>Types</h3>
@@ -59,38 +59,38 @@ memory--e.g., using row-major ordering--and could perhaps be improved.</p>
 <ul>
 <li><a name="constructor_tensor.0"></a> own&lt;<a href="#tensor"><a href="#tensor"><code>tensor</code></a></a>&gt;</li>
 </ul>
-<h4><a name="method_tensor.dimensions"></a><code>[method]tensor.dimensions: func</code></h4>
+<h4><a name="method_tensor_dimensions"></a><code>[method]tensor.dimensions: func</code></h4>
 <p>Describe the size of the tensor (e.g., 2x2x2x2 -&gt; [2, 2, 2, 2]). To represent a tensor
 containing a single value, use <code>[1]</code> for the tensor dimensions.</p>
 <h5>Params</h5>
 <ul>
-<li><a name="method_tensor.dimensions.self"></a><code>self</code>: borrow&lt;<a href="#tensor"><a href="#tensor"><code>tensor</code></a></a>&gt;</li>
+<li><a name="method_tensor_dimensions.self"></a><code>self</code>: borrow&lt;<a href="#tensor"><a href="#tensor"><code>tensor</code></a></a>&gt;</li>
 </ul>
 <h5>Return values</h5>
 <ul>
-<li><a name="method_tensor.dimensions.0"></a> <a href="#tensor_dimensions"><a href="#tensor_dimensions"><code>tensor-dimensions</code></a></a></li>
+<li><a name="method_tensor_dimensions.0"></a> <a href="#tensor_dimensions"><a href="#tensor_dimensions"><code>tensor-dimensions</code></a></a></li>
 </ul>
-<h4><a name="method_tensor.ty"></a><code>[method]tensor.ty: func</code></h4>
+<h4><a name="method_tensor_ty"></a><code>[method]tensor.ty: func</code></h4>
 <p>Describe the type of element in the tensor (e.g., <code>f32</code>).</p>
 <h5>Params</h5>
 <ul>
-<li><a name="method_tensor.ty.self"></a><code>self</code>: borrow&lt;<a href="#tensor"><a href="#tensor"><code>tensor</code></a></a>&gt;</li>
+<li><a name="method_tensor_ty.self"></a><code>self</code>: borrow&lt;<a href="#tensor"><a href="#tensor"><code>tensor</code></a></a>&gt;</li>
 </ul>
 <h5>Return values</h5>
 <ul>
-<li><a name="method_tensor.ty.0"></a> <a href="#tensor_type"><a href="#tensor_type"><code>tensor-type</code></a></a></li>
+<li><a name="method_tensor_ty.0"></a> <a href="#tensor_type"><a href="#tensor_type"><code>tensor-type</code></a></a></li>
 </ul>
-<h4><a name="method_tensor.data"></a><code>[method]tensor.data: func</code></h4>
+<h4><a name="method_tensor_data"></a><code>[method]tensor.data: func</code></h4>
 <p>Return the tensor data.</p>
 <h5>Params</h5>
 <ul>
-<li><a name="method_tensor.data.self"></a><code>self</code>: borrow&lt;<a href="#tensor"><a href="#tensor"><code>tensor</code></a></a>&gt;</li>
+<li><a name="method_tensor_data.self"></a><code>self</code>: borrow&lt;<a href="#tensor"><a href="#tensor"><code>tensor</code></a></a>&gt;</li>
 </ul>
 <h5>Return values</h5>
 <ul>
-<li><a name="method_tensor.data.0"></a> <a href="#tensor_data"><a href="#tensor_data"><code>tensor-data</code></a></a></li>
+<li><a name="method_tensor_data.0"></a> <a href="#tensor_data"><a href="#tensor_data"><code>tensor-data</code></a></a></li>
 </ul>
-<h2><a name="wasi:nn_errors_0.2.0_rc_2024_06_25"></a>Import interface wasi:nn/errors@0.2.0-rc-2024-06-25</h2>
+<h2><a name="wasi_nn_errors_0_2_0_rc_2024_06_25"></a>Import interface wasi:nn/errors@0.2.0-rc-2024-06-25</h2>
 <p>TODO: create function-specific errors (https://github.com/WebAssembly/wasi-nn/issues/42)</p>
 <hr />
 <h3>Types</h3>
@@ -148,27 +148,27 @@ e.g., cannot access a hardware feature requested
 <ul>
 <li><a name="constructor_error.0"></a> own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;</li>
 </ul>
-<h4><a name="method_error.code"></a><code>[method]error.code: func</code></h4>
+<h4><a name="method_error_code"></a><code>[method]error.code: func</code></h4>
 <p>Return the error code.</p>
 <h5>Params</h5>
 <ul>
-<li><a name="method_error.code.self"></a><code>self</code>: borrow&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;</li>
+<li><a name="method_error_code.self"></a><code>self</code>: borrow&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;</li>
 </ul>
 <h5>Return values</h5>
 <ul>
-<li><a name="method_error.code.0"></a> <a href="#error_code"><a href="#error_code"><code>error-code</code></a></a></li>
+<li><a name="method_error_code.0"></a> <a href="#error_code"><a href="#error_code"><code>error-code</code></a></a></li>
 </ul>
-<h4><a name="method_error.data"></a><code>[method]error.data: func</code></h4>
+<h4><a name="method_error_data"></a><code>[method]error.data: func</code></h4>
 <p>Errors can propagated with backend specific status through a string value.</p>
 <h5>Params</h5>
 <ul>
-<li><a name="method_error.data.self"></a><code>self</code>: borrow&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;</li>
+<li><a name="method_error_data.self"></a><code>self</code>: borrow&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;</li>
 </ul>
 <h5>Return values</h5>
 <ul>
-<li><a name="method_error.data.0"></a> <code>string</code></li>
+<li><a name="method_error_data.0"></a> <code>string</code></li>
 </ul>
-<h2><a name="wasi:nn_inference_0.2.0_rc_2024_06_25"></a>Import interface wasi:nn/inference@0.2.0-rc-2024-06-25</h2>
+<h2><a name="wasi_nn_inference_0_2_0_rc_2024_06_25"></a>Import interface wasi:nn/inference@0.2.0-rc-2024-06-25</h2>
 <p>An inference &quot;session&quot; is encapsulated by a <a href="#graph_execution_context"><code>graph-execution-context</code></a>. This structure binds a
 <a href="#graph"><code>graph</code></a> to input tensors before <code>compute</code>-ing an inference:</p>
 <hr />
@@ -187,43 +187,43 @@ e.g., cannot access a hardware feature requested
 <h2>TODO: this may no longer be necessary in WIT
 (https://github.com/WebAssembly/wasi-nn/issues/43)</h2>
 <h3>Functions</h3>
-<h4><a name="method_graph_execution_context.set_input"></a><code>[method]graph-execution-context.set-input: func</code></h4>
+<h4><a name="method_graph_execution_context_set_input"></a><code>[method]graph-execution-context.set-input: func</code></h4>
 <p>Define the inputs to use for inference.</p>
 <h5>Params</h5>
 <ul>
-<li><a name="method_graph_execution_context.set_input.self"></a><code>self</code>: borrow&lt;<a href="#graph_execution_context"><a href="#graph_execution_context"><code>graph-execution-context</code></a></a>&gt;</li>
-<li><a name="method_graph_execution_context.set_input.name"></a><code>name</code>: <code>string</code></li>
-<li><a name="method_graph_execution_context.set_input.tensor"></a><a href="#tensor"><code>tensor</code></a>: own&lt;<a href="#tensor"><a href="#tensor"><code>tensor</code></a></a>&gt;</li>
+<li><a name="method_graph_execution_context_set_input.self"></a><code>self</code>: borrow&lt;<a href="#graph_execution_context"><a href="#graph_execution_context"><code>graph-execution-context</code></a></a>&gt;</li>
+<li><a name="method_graph_execution_context_set_input.name"></a><code>name</code>: <code>string</code></li>
+<li><a name="method_graph_execution_context_set_input.tensor"></a><a href="#tensor"><code>tensor</code></a>: own&lt;<a href="#tensor"><a href="#tensor"><code>tensor</code></a></a>&gt;</li>
 </ul>
 <h5>Return values</h5>
 <ul>
-<li><a name="method_graph_execution_context.set_input.0"></a> result&lt;_, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
+<li><a name="method_graph_execution_context_set_input.0"></a> result&lt;_, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
 </ul>
-<h4><a name="method_graph_execution_context.compute"></a><code>[method]graph-execution-context.compute: func</code></h4>
+<h4><a name="method_graph_execution_context_compute"></a><code>[method]graph-execution-context.compute: func</code></h4>
 <p>Compute the inference on the given inputs.</p>
 <p>Note the expected sequence of calls: <code>set-input</code>, <code>compute</code>, <code>get-output</code>. TODO: this
 expectation could be removed as a part of
 https://github.com/WebAssembly/wasi-nn/issues/43.</p>
 <h5>Params</h5>
 <ul>
-<li><a name="method_graph_execution_context.compute.self"></a><code>self</code>: borrow&lt;<a href="#graph_execution_context"><a href="#graph_execution_context"><code>graph-execution-context</code></a></a>&gt;</li>
+<li><a name="method_graph_execution_context_compute.self"></a><code>self</code>: borrow&lt;<a href="#graph_execution_context"><a href="#graph_execution_context"><code>graph-execution-context</code></a></a>&gt;</li>
 </ul>
 <h5>Return values</h5>
 <ul>
-<li><a name="method_graph_execution_context.compute.0"></a> result&lt;_, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
+<li><a name="method_graph_execution_context_compute.0"></a> result&lt;_, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
 </ul>
-<h4><a name="method_graph_execution_context.get_output"></a><code>[method]graph-execution-context.get-output: func</code></h4>
+<h4><a name="method_graph_execution_context_get_output"></a><code>[method]graph-execution-context.get-output: func</code></h4>
 <p>Extract the outputs after inference.</p>
 <h5>Params</h5>
 <ul>
-<li><a name="method_graph_execution_context.get_output.self"></a><code>self</code>: borrow&lt;<a href="#graph_execution_context"><a href="#graph_execution_context"><code>graph-execution-context</code></a></a>&gt;</li>
-<li><a name="method_graph_execution_context.get_output.name"></a><code>name</code>: <code>string</code></li>
+<li><a name="method_graph_execution_context_get_output.self"></a><code>self</code>: borrow&lt;<a href="#graph_execution_context"><a href="#graph_execution_context"><code>graph-execution-context</code></a></a>&gt;</li>
+<li><a name="method_graph_execution_context_get_output.name"></a><code>name</code>: <code>string</code></li>
 </ul>
 <h5>Return values</h5>
 <ul>
-<li><a name="method_graph_execution_context.get_output.0"></a> result&lt;own&lt;<a href="#tensor"><a href="#tensor"><code>tensor</code></a></a>&gt;, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
+<li><a name="method_graph_execution_context_get_output.0"></a> result&lt;own&lt;<a href="#tensor"><a href="#tensor"><code>tensor</code></a></a>&gt;, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
 </ul>
-<h2><a name="wasi:nn_graph_0.2.0_rc_2024_06_25"></a>Import interface wasi:nn/graph@0.2.0-rc-2024-06-25</h2>
+<h2><a name="wasi_nn_graph_0_2_0_rc_2024_06_25"></a>Import interface wasi:nn/graph@0.2.0-rc-2024-06-25</h2>
 <p>A <a href="#graph"><code>graph</code></a> is a loaded instance of a specific ML model (e.g., MobileNet) for a specific ML
 framework (e.g., TensorFlow):</p>
 <hr />
@@ -267,14 +267,14 @@ backends that encode (i.e., serialize) their graph IR with different formats.</p
 graph IR in parts (e.g., OpenVINO stores its IR and weights separately).</p>
 <hr />
 <h3>Functions</h3>
-<h4><a name="method_graph.init_execution_context"></a><code>[method]graph.init-execution-context: func</code></h4>
+<h4><a name="method_graph_init_execution_context"></a><code>[method]graph.init-execution-context: func</code></h4>
 <h5>Params</h5>
 <ul>
-<li><a name="method_graph.init_execution_context.self"></a><code>self</code>: borrow&lt;<a href="#graph"><a href="#graph"><code>graph</code></a></a>&gt;</li>
+<li><a name="method_graph_init_execution_context.self"></a><code>self</code>: borrow&lt;<a href="#graph"><a href="#graph"><code>graph</code></a></a>&gt;</li>
 </ul>
 <h5>Return values</h5>
 <ul>
-<li><a name="method_graph.init_execution_context.0"></a> result&lt;own&lt;<a href="#graph_execution_context"><a href="#graph_execution_context"><code>graph-execution-context</code></a></a>&gt;, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
+<li><a name="method_graph_init_execution_context.0"></a> result&lt;own&lt;<a href="#graph_execution_context"><a href="#graph_execution_context"><code>graph-execution-context</code></a></a>&gt;, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
 </ul>
 <h4><a name="load"></a><code>load: func</code></h4>
 <p>Load a <a href="#graph"><code>graph</code></a> from an opaque sequence of bytes to use for inference.</p>
