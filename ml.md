@@ -102,10 +102,6 @@ containing a single value, use <code>[1]</code> for the tensor dimensions.</p>
 <p>Caller module passed an invalid argument.
 </li>
 <li>
-<p><a name="error_code.invalid_encoding"></a><code>invalid-encoding</code></p>
-<p>Invalid encoding.
-</li>
-<li>
 <p><a name="error_code.timeout"></a><code>timeout</code></p>
 <p>The operation timed out.
 </li>
@@ -231,42 +227,25 @@ framework (e.g., TensorFlow):</p>
 <h4><a name="error"></a><code>type error</code></h4>
 <p><a href="#error"><a href="#error"><code>error</code></a></a></p>
 <p>
-#### <a name="tensor"></a>`type tensor`
-[`tensor`](#tensor)
-<p>
 #### <a name="graph_execution_context"></a>`type graph-execution-context`
 [`graph-execution-context`](#graph_execution_context)
 <p>
 #### <a name="graph"></a>`resource graph`
-<p>An execution graph for performing inference (i.e., a model).</p>
-<h4><a name="graph_encoding"></a><code>enum graph-encoding</code></h4>
-<p>Describes the encoding of the graph. This allows the API to be implemented by various
-backends that encode (i.e., serialize) their graph IR with different formats.</p>
-<h5>Enum Cases</h5>
-<ul>
-<li><a name="graph_encoding.openvino"></a><code>openvino</code></li>
-<li><a name="graph_encoding.onnx"></a><code>onnx</code></li>
-<li><a name="graph_encoding.tensorflow"></a><code>tensorflow</code></li>
-<li><a name="graph_encoding.pytorch"></a><code>pytorch</code></li>
-<li><a name="graph_encoding.tensorflowlite"></a><code>tensorflowlite</code></li>
-<li><a name="graph_encoding.ggml"></a><code>ggml</code></li>
-<li><a name="graph_encoding.autodetect"></a><code>autodetect</code></li>
-</ul>
-<h4><a name="execution_target"></a><code>enum execution-target</code></h4>
-<p>Define where the graph should be executed.</p>
-<h5>Enum Cases</h5>
-<ul>
-<li><a name="execution_target.cpu"></a><code>cpu</code></li>
-<li><a name="execution_target.gpu"></a><code>gpu</code></li>
-<li><a name="execution_target.tpu"></a><code>tpu</code></li>
-</ul>
-<h4><a name="graph_builder"></a><code>type graph-builder</code></h4>
-<p><a href="#graph_builder"><a href="#graph_builder"><code>graph-builder</code></a></a></p>
-<p>The graph initialization data.
-<p>This gets bundled up into an array of buffers because implementing backends may encode their
-graph IR in parts (e.g., OpenVINO stores its IR and weights separately).</p>
-<hr />
+<h2>An execution graph for performing inference (i.e., a model).</h2>
 <h3>Functions</h3>
+<h4><a name="load"></a><code>load: func</code></h4>
+<p>Load a <a href="#graph"><code>graph</code></a> by name.</p>
+<p>How the host expects the names to be passed and how it stores the graphs for retrieval via
+this function is <strong>implementation-specific</strong>. This allows hosts to choose name schemes that
+range from simple to complex (e.g., URLs?) and caching mechanisms of various kinds.</p>
+<h5>Params</h5>
+<ul>
+<li><a name="load.name"></a><code>name</code>: <code>string</code></li>
+</ul>
+<h5>Return values</h5>
+<ul>
+<li><a name="load.0"></a> result&lt;own&lt;<a href="#graph"><a href="#graph"><code>graph</code></a></a>&gt;, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
+</ul>
 <h4><a name="method_graph_init_execution_context"></a><code>[method]graph.init-execution-context: func</code></h4>
 <h5>Params</h5>
 <ul>
@@ -275,29 +254,4 @@ graph IR in parts (e.g., OpenVINO stores its IR and weights separately).</p>
 <h5>Return values</h5>
 <ul>
 <li><a name="method_graph_init_execution_context.0"></a> result&lt;own&lt;<a href="#graph_execution_context"><a href="#graph_execution_context"><code>graph-execution-context</code></a></a>&gt;, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
-</ul>
-<h4><a name="load"></a><code>load: func</code></h4>
-<p>Load a <a href="#graph"><code>graph</code></a> from an opaque sequence of bytes to use for inference.</p>
-<h5>Params</h5>
-<ul>
-<li><a name="load.builder"></a><code>builder</code>: list&lt;<a href="#graph_builder"><a href="#graph_builder"><code>graph-builder</code></a></a>&gt;</li>
-<li><a name="load.encoding"></a><code>encoding</code>: <a href="#graph_encoding"><a href="#graph_encoding"><code>graph-encoding</code></a></a></li>
-<li><a name="load.target"></a><code>target</code>: <a href="#execution_target"><a href="#execution_target"><code>execution-target</code></a></a></li>
-</ul>
-<h5>Return values</h5>
-<ul>
-<li><a name="load.0"></a> result&lt;own&lt;<a href="#graph"><a href="#graph"><code>graph</code></a></a>&gt;, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
-</ul>
-<h4><a name="load_by_name"></a><code>load-by-name: func</code></h4>
-<p>Load a <a href="#graph"><code>graph</code></a> by name.</p>
-<p>How the host expects the names to be passed and how it stores the graphs for retrieval via
-this function is <strong>implementation-specific</strong>. This allows hosts to choose name schemes that
-range from simple to complex (e.g., URLs?) and caching mechanisms of various kinds.</p>
-<h5>Params</h5>
-<ul>
-<li><a name="load_by_name.name"></a><code>name</code>: <code>string</code></li>
-</ul>
-<h5>Return values</h5>
-<ul>
-<li><a name="load_by_name.0"></a> result&lt;own&lt;<a href="#graph"><a href="#graph"><code>graph</code></a></a>&gt;, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
 </ul>
