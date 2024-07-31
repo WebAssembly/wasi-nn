@@ -135,38 +135,18 @@ e.g., cannot access a hardware feature requested
 <p>The operation failed for an unspecified reason.
 </li>
 </ul>
-<h4><a name="error"></a><code>resource error</code></h4>
-<hr />
-<h3>Functions</h3>
-<h4><a name="constructor_error"></a><code>[constructor]error: func</code></h4>
-<h5>Params</h5>
+<h4><a name="error"></a><code>record error</code></h4>
+<h5>Record Fields</h5>
 <ul>
-<li><a name="constructor_error.code"></a><code>code</code>: <a href="#error_code"><a href="#error_code"><code>error-code</code></a></a></li>
-<li><a name="constructor_error.data"></a><code>data</code>: <code>string</code></li>
-</ul>
-<h5>Return values</h5>
-<ul>
-<li><a name="constructor_error.0"></a> own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;</li>
-</ul>
-<h4><a name="method_error_code"></a><code>[method]error.code: func</code></h4>
-<p>Return the error code.</p>
-<h5>Params</h5>
-<ul>
-<li><a name="method_error_code.self"></a><code>self</code>: borrow&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;</li>
-</ul>
-<h5>Return values</h5>
-<ul>
-<li><a name="method_error_code.0"></a> <a href="#error_code"><a href="#error_code"><code>error-code</code></a></a></li>
-</ul>
-<h4><a name="method_error_data"></a><code>[method]error.data: func</code></h4>
-<p>Errors can propagated with backend specific status through a string value.</p>
-<h5>Params</h5>
-<ul>
-<li><a name="method_error_data.self"></a><code>self</code>: borrow&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;</li>
-</ul>
-<h5>Return values</h5>
-<ul>
-<li><a name="method_error_data.0"></a> <code>string</code></li>
+<li>
+<p><a name="error.code"></a><code>code</code>: <a href="#error_code"><a href="#error_code"><code>error-code</code></a></a></p>
+<p>The error code identifies the general reason the operation failed.
+</li>
+<li>
+<p><a name="error.data"></a><code>data</code>: <code>string</code></p>
+<p>The data field propagates the backend failure context as a string for easier
+troubleshooting.
+</li>
 </ul>
 <h2><a name="wasi_nn_inference_0_2_0_rc_2024_06_25"></a>Import interface wasi:nn/inference@0.2.0-rc-2024-06-25</h2>
 <p>An inference &quot;session&quot; is encapsulated by a <a href="#graph_execution_context"><code>graph-execution-context</code></a>. This structure binds a
@@ -197,7 +177,7 @@ e.g., cannot access a hardware feature requested
 </ul>
 <h5>Return values</h5>
 <ul>
-<li><a name="method_graph_execution_context_set_input.0"></a> result&lt;_, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
+<li><a name="method_graph_execution_context_set_input.0"></a> result&lt;_, <a href="#error"><a href="#error"><code>error</code></a></a>&gt;</li>
 </ul>
 <h4><a name="method_graph_execution_context_compute"></a><code>[method]graph-execution-context.compute: func</code></h4>
 <p>Compute the inference on the given inputs.</p>
@@ -210,7 +190,7 @@ https://github.com/WebAssembly/wasi-nn/issues/43.</p>
 </ul>
 <h5>Return values</h5>
 <ul>
-<li><a name="method_graph_execution_context_compute.0"></a> result&lt;_, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
+<li><a name="method_graph_execution_context_compute.0"></a> result&lt;_, <a href="#error"><a href="#error"><code>error</code></a></a>&gt;</li>
 </ul>
 <h4><a name="method_graph_execution_context_get_output"></a><code>[method]graph-execution-context.get-output: func</code></h4>
 <p>Extract the outputs after inference.</p>
@@ -221,7 +201,7 @@ https://github.com/WebAssembly/wasi-nn/issues/43.</p>
 </ul>
 <h5>Return values</h5>
 <ul>
-<li><a name="method_graph_execution_context_get_output.0"></a> result&lt;own&lt;<a href="#tensor"><a href="#tensor"><code>tensor</code></a></a>&gt;, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
+<li><a name="method_graph_execution_context_get_output.0"></a> result&lt;own&lt;<a href="#tensor"><a href="#tensor"><code>tensor</code></a></a>&gt;, <a href="#error"><a href="#error"><code>error</code></a></a>&gt;</li>
 </ul>
 <h2><a name="wasi_nn_graph_0_2_0_rc_2024_06_25"></a>Import interface wasi:nn/graph@0.2.0-rc-2024-06-25</h2>
 <p>A <a href="#graph"><code>graph</code></a> is a loaded instance of a specific ML model (e.g., MobileNet) for a specific ML
@@ -274,7 +254,7 @@ graph IR in parts (e.g., OpenVINO stores its IR and weights separately).</p>
 </ul>
 <h5>Return values</h5>
 <ul>
-<li><a name="method_graph_init_execution_context.0"></a> result&lt;own&lt;<a href="#graph_execution_context"><a href="#graph_execution_context"><code>graph-execution-context</code></a></a>&gt;, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
+<li><a name="method_graph_init_execution_context.0"></a> result&lt;own&lt;<a href="#graph_execution_context"><a href="#graph_execution_context"><code>graph-execution-context</code></a></a>&gt;, <a href="#error"><a href="#error"><code>error</code></a></a>&gt;</li>
 </ul>
 <h4><a name="load"></a><code>load: func</code></h4>
 <p>Load a <a href="#graph"><code>graph</code></a> from an opaque sequence of bytes to use for inference.</p>
@@ -286,7 +266,7 @@ graph IR in parts (e.g., OpenVINO stores its IR and weights separately).</p>
 </ul>
 <h5>Return values</h5>
 <ul>
-<li><a name="load.0"></a> result&lt;own&lt;<a href="#graph"><a href="#graph"><code>graph</code></a></a>&gt;, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
+<li><a name="load.0"></a> result&lt;own&lt;<a href="#graph"><a href="#graph"><code>graph</code></a></a>&gt;, <a href="#error"><a href="#error"><code>error</code></a></a>&gt;</li>
 </ul>
 <h4><a name="load_by_name"></a><code>load-by-name: func</code></h4>
 <p>Load a <a href="#graph"><code>graph</code></a> by name.</p>
@@ -299,5 +279,5 @@ range from simple to complex (e.g., URLs?) and caching mechanisms of various kin
 </ul>
 <h5>Return values</h5>
 <ul>
-<li><a name="load_by_name.0"></a> result&lt;own&lt;<a href="#graph"><a href="#graph"><code>graph</code></a></a>&gt;, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
+<li><a name="load_by_name.0"></a> result&lt;own&lt;<a href="#graph"><a href="#graph"><code>graph</code></a></a>&gt;, <a href="#error"><a href="#error"><code>error</code></a></a>&gt;</li>
 </ul>

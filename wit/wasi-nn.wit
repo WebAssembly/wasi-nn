@@ -156,13 +156,12 @@ interface errors {
         unknown
     }
 
-    resource error {
-        constructor(code: error-code, data: string);
+    record error {
+        /// The error code identifies the general reason the operation failed.
+        code: error-code,
 
-        /// Return the error code.
-        code: func() -> error-code;
-
-        /// Errors can propagated with backend specific status through a string value.
-        data: func() -> string;
+        /// The data field propagates the backend failure context as a string for easier
+        /// troubleshooting.
+        data: string,
     }
 }
