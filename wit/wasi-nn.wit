@@ -157,8 +157,6 @@ interface errors {
     }
 
     resource error {
-        constructor(code: error-code, data: string);
-
         /// Return the error code.
         code: func() -> error-code;
 
