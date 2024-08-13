@@ -13,6 +13,7 @@ Then, the user passes <em>tensor</em> inputs to the <em>graph</em>, computes the
 <li>interface <a href="#wasi_nn_errors_0_2_0_rc_2024_06_25"><code>wasi:nn/errors@0.2.0-rc-2024-06-25</code></a></li>
 <li>interface <a href="#wasi_nn_inference_0_2_0_rc_2024_06_25"><code>wasi:nn/inference@0.2.0-rc-2024-06-25</code></a></li>
 <li>interface <a href="#wasi_nn_graph_0_2_0_rc_2024_06_25"><code>wasi:nn/graph@0.2.0-rc-2024-06-25</code></a></li>
+<li>interface <a href="#wasi_nn_prompt_0_2_0_rc_2024_06_25"><code>wasi:nn/prompt@0.2.0-rc-2024-06-25</code></a></li>
 </ul>
 </li>
 </ul>
@@ -300,4 +301,37 @@ range from simple to complex (e.g., URLs?) and caching mechanisms of various kin
 <h5>Return values</h5>
 <ul>
 <li><a name="load_by_name.0"></a> result&lt;own&lt;<a href="#graph"><a href="#graph"><code>graph</code></a></a>&gt;, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
+</ul>
+<h2><a name="wasi_nn_prompt_0_2_0_rc_2024_06_25"></a>Import interface wasi:nn/prompt@0.2.0-rc-2024-06-25</h2>
+<p>A prompt &quot;session&quot; is encapsulated by a <a href="#context"><code>context</code></a>.</p>
+<hr />
+<h3>Types</h3>
+<h4><a name="graph"></a><code>type graph</code></h4>
+<p><a href="#graph"><a href="#graph"><code>graph</code></a></a></p>
+<p>
+#### <a name="context"></a>`resource context`
+<h2>A prompt &quot;session.&quot;</h2>
+<h3>Functions</h3>
+<h4><a name="init"></a><code>init: func</code></h4>
+<p>Initialize a prompt session with a graph.</p>
+<p>Note that not all graphs are prompt-ready (see <code>inference</code>); this
+function may fail in this case.</p>
+<h5>Params</h5>
+<ul>
+<li><a name="init.graph"></a><a href="#graph"><code>graph</code></a>: own&lt;<a href="#graph"><a href="#graph"><code>graph</code></a></a>&gt;</li>
+</ul>
+<h5>Return values</h5>
+<ul>
+<li><a name="init.0"></a> result&lt;own&lt;<a href="#context"><a href="#context"><code>context</code></a></a>&gt;, <code>string</code>&gt;</li>
+</ul>
+<h4><a name="method_context_compute"></a><code>[method]context.compute: func</code></h4>
+<p>Compute an inference request with the given inputs.</p>
+<h5>Params</h5>
+<ul>
+<li><a name="method_context_compute.self"></a><code>self</code>: borrow&lt;<a href="#context"><a href="#context"><code>context</code></a></a>&gt;</li>
+<li><a name="method_context_compute.prompt"></a><code>prompt</code>: <code>string</code></li>
+</ul>
+<h5>Return values</h5>
+<ul>
+<li><a name="method_context_compute.0"></a> result&lt;<code>string</code>, <code>string</code>&gt;</li>
 </ul>
