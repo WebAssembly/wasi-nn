@@ -276,6 +276,44 @@ graph IR in parts (e.g., OpenVINO stores its IR and weights separately).</p>
 <ul>
 <li><a name="method_graph_init_execution_context.0"></a> result&lt;own&lt;<a href="#graph_execution_context"><a href="#graph_execution_context"><code>graph-execution-context</code></a></a>&gt;, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
 </ul>
+<h4><a name="method_graph_list_properties"></a><code>[method]graph.list-properties: func</code></h4>
+<p>Retrieve the properties of the graph.</p>
+<p>These are metadata about the graph, unique to the graph and the
+ML backend providing it.</p>
+<h5>Params</h5>
+<ul>
+<li><a name="method_graph_list_properties.self"></a><code>self</code>: borrow&lt;<a href="#graph"><a href="#graph"><code>graph</code></a></a>&gt;</li>
+</ul>
+<h5>Return values</h5>
+<ul>
+<li><a name="method_graph_list_properties.0"></a> list&lt;<code>string</code>&gt;</li>
+</ul>
+<h4><a name="method_graph_get_property"></a><code>[method]graph.get-property: func</code></h4>
+<p>Retrieve the value of a property.</p>
+<p>If the property does not exist, this function returns <code>none</code>.</p>
+<h5>Params</h5>
+<ul>
+<li><a name="method_graph_get_property.self"></a><code>self</code>: borrow&lt;<a href="#graph"><a href="#graph"><code>graph</code></a></a>&gt;</li>
+<li><a name="method_graph_get_property.name"></a><code>name</code>: <code>string</code></li>
+</ul>
+<h5>Return values</h5>
+<ul>
+<li><a name="method_graph_get_property.0"></a> option&lt;<code>string</code>&gt;</li>
+</ul>
+<h4><a name="method_graph_set_property"></a><code>[method]graph.set-property: func</code></h4>
+<p>Modify the value of a property.</p>
+<p>If the operation fails, this function returns a string from the ML
+backend describing the error.</p>
+<h5>Params</h5>
+<ul>
+<li><a name="method_graph_set_property.self"></a><code>self</code>: borrow&lt;<a href="#graph"><a href="#graph"><code>graph</code></a></a>&gt;</li>
+<li><a name="method_graph_set_property.name"></a><code>name</code>: <code>string</code></li>
+<li><a name="method_graph_set_property.value"></a><code>value</code>: <code>string</code></li>
+</ul>
+<h5>Return values</h5>
+<ul>
+<li><a name="method_graph_set_property.0"></a> result&lt;_, <code>string</code>&gt;</li>
+</ul>
 <h4><a name="load"></a><code>load: func</code></h4>
 <p>Load a <a href="#graph"><code>graph</code></a> from an opaque sequence of bytes to use for inference.</p>
 <h5>Params</h5>
