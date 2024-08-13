@@ -10,7 +10,6 @@ Then, the user passes <em>tensor</em> inputs to the <em>graph</em>, computes the
 <li>Imports:
 <ul>
 <li>interface <a href="#wasi_nn_tensor_0_2_0_rc_2024_06_25"><code>wasi:nn/tensor@0.2.0-rc-2024-06-25</code></a></li>
-<li>interface <a href="#wasi_nn_errors_0_2_0_rc_2024_06_25"><code>wasi:nn/errors@0.2.0-rc-2024-06-25</code></a></li>
 <li>interface <a href="#wasi_nn_inference_0_2_0_rc_2024_06_25"><code>wasi:nn/inference@0.2.0-rc-2024-06-25</code></a></li>
 <li>interface <a href="#wasi_nn_graph_0_2_0_rc_2024_06_25"><code>wasi:nn/graph@0.2.0-rc-2024-06-25</code></a></li>
 </ul>
@@ -90,94 +89,13 @@ containing a single value, use <code>[1]</code> for the tensor dimensions.</p>
 <ul>
 <li><a name="method_tensor_data.0"></a> <a href="#tensor_data"><a href="#tensor_data"><code>tensor-data</code></a></a></li>
 </ul>
-<h2><a name="wasi_nn_errors_0_2_0_rc_2024_06_25"></a>Import interface wasi:nn/errors@0.2.0-rc-2024-06-25</h2>
-<p>TODO: create function-specific errors (https://github.com/WebAssembly/wasi-nn/issues/42)</p>
-<hr />
-<h3>Types</h3>
-<h4><a name="error_code"></a><code>enum error-code</code></h4>
-<h5>Enum Cases</h5>
-<ul>
-<li>
-<p><a name="error_code.invalid_argument"></a><code>invalid-argument</code></p>
-<p>Caller module passed an invalid argument.
-</li>
-<li>
-<p><a name="error_code.invalid_encoding"></a><code>invalid-encoding</code></p>
-<p>Invalid encoding.
-</li>
-<li>
-<p><a name="error_code.timeout"></a><code>timeout</code></p>
-<p>The operation timed out.
-</li>
-<li>
-<p><a name="error_code.runtime_error"></a><code>runtime-error</code></p>
-<p>Runtime Error.
-</li>
-<li>
-<p><a name="error_code.unsupported_operation"></a><code>unsupported-operation</code></p>
-<p>Unsupported operation.
-</li>
-<li>
-<p><a name="error_code.too_large"></a><code>too-large</code></p>
-<p>Graph is too large.
-</li>
-<li>
-<p><a name="error_code.not_found"></a><code>not-found</code></p>
-<p>Graph not found.
-</li>
-<li>
-<p><a name="error_code.security"></a><code>security</code></p>
-<p>The operation is insecure or has insufficient privilege to be performed.
-e.g., cannot access a hardware feature requested
-</li>
-<li>
-<p><a name="error_code.unknown"></a><code>unknown</code></p>
-<p>The operation failed for an unspecified reason.
-</li>
-</ul>
-<h4><a name="error"></a><code>resource error</code></h4>
-<hr />
-<h3>Functions</h3>
-<h4><a name="constructor_error"></a><code>[constructor]error: func</code></h4>
-<h5>Params</h5>
-<ul>
-<li><a name="constructor_error.code"></a><code>code</code>: <a href="#error_code"><a href="#error_code"><code>error-code</code></a></a></li>
-<li><a name="constructor_error.data"></a><code>data</code>: <code>string</code></li>
-</ul>
-<h5>Return values</h5>
-<ul>
-<li><a name="constructor_error.0"></a> own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;</li>
-</ul>
-<h4><a name="method_error_code"></a><code>[method]error.code: func</code></h4>
-<p>Return the error code.</p>
-<h5>Params</h5>
-<ul>
-<li><a name="method_error_code.self"></a><code>self</code>: borrow&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;</li>
-</ul>
-<h5>Return values</h5>
-<ul>
-<li><a name="method_error_code.0"></a> <a href="#error_code"><a href="#error_code"><code>error-code</code></a></a></li>
-</ul>
-<h4><a name="method_error_data"></a><code>[method]error.data: func</code></h4>
-<p>Errors can propagated with backend specific status through a string value.</p>
-<h5>Params</h5>
-<ul>
-<li><a name="method_error_data.self"></a><code>self</code>: borrow&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;</li>
-</ul>
-<h5>Return values</h5>
-<ul>
-<li><a name="method_error_data.0"></a> <code>string</code></li>
-</ul>
 <h2><a name="wasi_nn_inference_0_2_0_rc_2024_06_25"></a>Import interface wasi:nn/inference@0.2.0-rc-2024-06-25</h2>
 <p>An inference &quot;session&quot; is encapsulated by a <a href="#graph_execution_context"><code>graph-execution-context</code></a>. This structure binds a
 <a href="#graph"><code>graph</code></a> to input tensors before <code>compute</code>-ing an inference:</p>
 <hr />
 <h3>Types</h3>
-<h4><a name="error"></a><code>type error</code></h4>
-<p><a href="#error"><a href="#error"><code>error</code></a></a></p>
-<p>
-#### <a name="tensor"></a>`type tensor`
-[`tensor`](#tensor)
+<h4><a name="tensor"></a><code>type tensor</code></h4>
+<p><a href="#tensor"><a href="#tensor"><code>tensor</code></a></a></p>
 <p>
 #### <a name="tensor_data"></a>`type tensor-data`
 [`tensor-data`](#tensor_data)
@@ -197,7 +115,7 @@ e.g., cannot access a hardware feature requested
 </ul>
 <h5>Return values</h5>
 <ul>
-<li><a name="method_graph_execution_context_set_input.0"></a> result&lt;_, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
+<li><a name="method_graph_execution_context_set_input.0"></a> result&lt;_, <code>string</code>&gt;</li>
 </ul>
 <h4><a name="method_graph_execution_context_compute"></a><code>[method]graph-execution-context.compute: func</code></h4>
 <p>Compute the inference on the given inputs.</p>
@@ -210,7 +128,7 @@ https://github.com/WebAssembly/wasi-nn/issues/43.</p>
 </ul>
 <h5>Return values</h5>
 <ul>
-<li><a name="method_graph_execution_context_compute.0"></a> result&lt;_, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
+<li><a name="method_graph_execution_context_compute.0"></a> result&lt;_, <code>string</code>&gt;</li>
 </ul>
 <h4><a name="method_graph_execution_context_get_output"></a><code>[method]graph-execution-context.get-output: func</code></h4>
 <p>Extract the outputs after inference.</p>
@@ -221,18 +139,15 @@ https://github.com/WebAssembly/wasi-nn/issues/43.</p>
 </ul>
 <h5>Return values</h5>
 <ul>
-<li><a name="method_graph_execution_context_get_output.0"></a> result&lt;own&lt;<a href="#tensor"><a href="#tensor"><code>tensor</code></a></a>&gt;, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
+<li><a name="method_graph_execution_context_get_output.0"></a> result&lt;own&lt;<a href="#tensor"><a href="#tensor"><code>tensor</code></a></a>&gt;, <code>string</code>&gt;</li>
 </ul>
 <h2><a name="wasi_nn_graph_0_2_0_rc_2024_06_25"></a>Import interface wasi:nn/graph@0.2.0-rc-2024-06-25</h2>
 <p>A <a href="#graph"><code>graph</code></a> is a loaded instance of a specific ML model (e.g., MobileNet) for a specific ML
 framework (e.g., TensorFlow):</p>
 <hr />
 <h3>Types</h3>
-<h4><a name="error"></a><code>type error</code></h4>
-<p><a href="#error"><a href="#error"><code>error</code></a></a></p>
-<p>
-#### <a name="tensor"></a>`type tensor`
-[`tensor`](#tensor)
+<h4><a name="tensor"></a><code>type tensor</code></h4>
+<p><a href="#tensor"><a href="#tensor"><code>tensor</code></a></a></p>
 <p>
 #### <a name="graph_execution_context"></a>`type graph-execution-context`
 [`graph-execution-context`](#graph_execution_context)
@@ -274,7 +189,7 @@ graph IR in parts (e.g., OpenVINO stores its IR and weights separately).</p>
 </ul>
 <h5>Return values</h5>
 <ul>
-<li><a name="method_graph_init_execution_context.0"></a> result&lt;own&lt;<a href="#graph_execution_context"><a href="#graph_execution_context"><code>graph-execution-context</code></a></a>&gt;, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
+<li><a name="method_graph_init_execution_context.0"></a> result&lt;own&lt;<a href="#graph_execution_context"><a href="#graph_execution_context"><code>graph-execution-context</code></a></a>&gt;, <code>string</code>&gt;</li>
 </ul>
 <h4><a name="load"></a><code>load: func</code></h4>
 <p>Load a <a href="#graph"><code>graph</code></a> from an opaque sequence of bytes to use for inference.</p>
@@ -286,7 +201,7 @@ graph IR in parts (e.g., OpenVINO stores its IR and weights separately).</p>
 </ul>
 <h5>Return values</h5>
 <ul>
-<li><a name="load.0"></a> result&lt;own&lt;<a href="#graph"><a href="#graph"><code>graph</code></a></a>&gt;, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
+<li><a name="load.0"></a> result&lt;own&lt;<a href="#graph"><a href="#graph"><code>graph</code></a></a>&gt;, <code>string</code>&gt;</li>
 </ul>
 <h4><a name="load_by_name"></a><code>load-by-name: func</code></h4>
 <p>Load a <a href="#graph"><code>graph</code></a> by name.</p>
@@ -299,5 +214,5 @@ range from simple to complex (e.g., URLs?) and caching mechanisms of various kin
 </ul>
 <h5>Return values</h5>
 <ul>
-<li><a name="load_by_name.0"></a> result&lt;own&lt;<a href="#graph"><a href="#graph"><code>graph</code></a></a>&gt;, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
+<li><a name="load_by_name.0"></a> result&lt;own&lt;<a href="#graph"><a href="#graph"><code>graph</code></a></a>&gt;, <code>string</code>&gt;</li>
 </ul>

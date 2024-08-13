@@ -12,7 +12,6 @@ world ml {
     import tensor;
     import graph;
     import inference;
-    import errors;
 }
 
 /// All inputs and outputs to an ML inference are represented as `tensor`s.
@@ -61,13 +60,12 @@ interface tensor {
 /// A `graph` is a loaded instance of a specific ML model (e.g., MobileNet) for a specific ML
 /// framework (e.g., TensorFlow):
 interface graph {
-    use errors.{error};
     use tensor.{tensor};
     use inference.{graph-execution-context};
 
     /// An execution graph for performing inference (i.e., a model).
     resource graph {
-        init-execution-context: func() -> result<graph-execution-context, error>;
+        init-execution-context: func() -> result<graph-execution-context, string>;
     }
 
     /// Describes the encoding of the graph. This allows the API to be implemented by various
@@ -96,20 +94,19 @@ interface graph {
     type graph-builder = list<u8>;
 
     /// Load a `graph` from an opaque sequence of bytes to use for inference.
-    load: func(builder: list<graph-builder>, encoding: graph-encoding, target: execution-target) -> result<graph, error>;
+    load: func(builder: list<graph-builder>, encoding: graph-encoding, target: execution-target) -> result<graph, string>;
 
     /// Load a `graph` by name.
     ///
     /// How the host expects the names to be passed and how it stores the graphs for retrieval via
     /// this function is **implementation-specific**. This allows hosts to choose name schemes that
     /// range from simple to complex (e.g., URLs?) and caching mechanisms of various kinds.
-    load-by-name: func(name: string) -> result<graph, error>;
+    load-by-name: func(name: string) -> result<graph, string>;
 }
 
 /// An inference "session" is encapsulated by a `graph-execution-context`. This structure binds a
 /// `graph` to input tensors before `compute`-ing an inference:
 interface inference {
-    use errors.{error};
     use tensor.{tensor, tensor-data};
 
     /// Bind a `graph` to the input and output tensors for an inference.
@@ -118,51 +115,16 @@ interface inference {
     /// (https://github.com/WebAssembly/wasi-nn/issues/43)
     resource graph-execution-context {
         /// Define the inputs to use for inference.
-        set-input: func(name: string, tensor: tensor) -> result<_, error>;
+        set-input: func(name: string, tensor: tensor) -> result<_, string>;
 
         /// Compute the inference on the given inputs.
         ///
         /// Note the expected sequence of calls: `set-input`, `compute`, `get-output`. TODO: this
         /// expectation could be removed as a part of
         /// https://github.com/WebAssembly/wasi-nn/issues/43.
-        compute: func() -> result<_, error>;
+        compute: func() -> result<_, string>;
 
         /// Extract the outputs after inference.
-        get-output: func(name: string) -> result<tensor, error>;
-    }
-}
-
-/// TODO: create function-specific errors (https://github.com/WebAssembly/wasi-nn/issues/42)
-interface errors {
-    enum error-code {
-        // Caller module passed an invalid argument.
-        invalid-argument,
-        // Invalid encoding.
-        invalid-encoding,
-        // The operation timed out.
-        timeout,
-        // Runtime Error.
-        runtime-error,
-        // Unsupported operation.
-        unsupported-operation,
-        // Graph is too large.
-        too-large,
-        // Graph not found.
-        not-found,
-        // The operation is insecure or has insufficient privilege to be performed.
-        // e.g., cannot access a hardware feature requested
-        security,
-        // The operation failed for an unspecified reason.
-        unknown
-    }
-
-    resource error {
-        constructor(code: error-code, data: string);
-
-        /// Return the error code.
-        code: func() -> error-code;
-
-        /// Errors can propagated with backend specific status through a string value.
-        data: func() -> string;
+        get-output: func(name: string) -> result<tensor, string>;
     }
 }
