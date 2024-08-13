@@ -12,6 +12,7 @@ world ml {
     import tensor;
     import graph;
     import inference;
+    import prompt;
     import errors;
 }
 
@@ -129,6 +130,23 @@ interface inference {
 
         /// Extract the outputs after inference.
         get-output: func(name: string) -> result<tensor, error>;
+    }
+}
+
+/// A prompt "session" is encapsulated by a `context`.
+interface prompt {
+    use graph.{graph};
+
+    /// Initialize a prompt session with a graph.
+    ///
+    /// Note that not all graphs are prompt-ready (see `inference`); this
+    /// function may fail in this case.
+    init: func(graph: graph) -> result<context, string>;
+
+    /// A prompt "session."
+    resource context {
+        /// Compute an inference request with the given inputs.
+        compute: func(prompt: string) -> result<string, string>;
     }
 }
 
