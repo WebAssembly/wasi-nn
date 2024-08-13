@@ -179,49 +179,29 @@ e.g., cannot access a hardware feature requested
 #### <a name="tensor"></a>`type tensor`
 [`tensor`](#tensor)
 <p>
-#### <a name="tensor_data"></a>`type tensor-data`
-[`tensor-data`](#tensor_data)
-<p>
-#### <a name="graph_execution_context"></a>`resource graph-execution-context`
+#### <a name="named_tensor"></a>`tuple named-tensor`
+<p>Identify a tensor by name; this is necessary to associate tensors to
+graph inputs and outputs.</p>
+<h5>Tuple Fields</h5>
+<ul>
+<li><a name="named_tensor.0"></a><code>0</code>: <code>string</code></li>
+<li><a name="named_tensor.1"></a><code>1</code>: own&lt;<a href="#tensor"><a href="#tensor"><code>tensor</code></a></a>&gt;</li>
+</ul>
+<h4><a name="graph_execution_context"></a><code>resource graph-execution-context</code></h4>
 <p>Bind a <a href="#graph"><code>graph</code></a> to the input and output tensors for an inference.</p>
 <h2>TODO: this may no longer be necessary in WIT
 (https://github.com/WebAssembly/wasi-nn/issues/43)</h2>
 <h3>Functions</h3>
-<h4><a name="method_graph_execution_context_set_input"></a><code>[method]graph-execution-context.set-input: func</code></h4>
-<p>Define the inputs to use for inference.</p>
-<h5>Params</h5>
-<ul>
-<li><a name="method_graph_execution_context_set_input.self"></a><code>self</code>: borrow&lt;<a href="#graph_execution_context"><a href="#graph_execution_context"><code>graph-execution-context</code></a></a>&gt;</li>
-<li><a name="method_graph_execution_context_set_input.name"></a><code>name</code>: <code>string</code></li>
-<li><a name="method_graph_execution_context_set_input.tensor"></a><a href="#tensor"><code>tensor</code></a>: own&lt;<a href="#tensor"><a href="#tensor"><code>tensor</code></a></a>&gt;</li>
-</ul>
-<h5>Return values</h5>
-<ul>
-<li><a name="method_graph_execution_context_set_input.0"></a> result&lt;_, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
-</ul>
 <h4><a name="method_graph_execution_context_compute"></a><code>[method]graph-execution-context.compute: func</code></h4>
 <p>Compute the inference on the given inputs.</p>
-<p>Note the expected sequence of calls: <code>set-input</code>, <code>compute</code>, <code>get-output</code>. TODO: this
-expectation could be removed as a part of
-https://github.com/WebAssembly/wasi-nn/issues/43.</p>
 <h5>Params</h5>
 <ul>
 <li><a name="method_graph_execution_context_compute.self"></a><code>self</code>: borrow&lt;<a href="#graph_execution_context"><a href="#graph_execution_context"><code>graph-execution-context</code></a></a>&gt;</li>
+<li><a name="method_graph_execution_context_compute.inputs"></a><code>inputs</code>: list&lt;<a href="#named_tensor"><a href="#named_tensor"><code>named-tensor</code></a></a>&gt;</li>
 </ul>
 <h5>Return values</h5>
 <ul>
-<li><a name="method_graph_execution_context_compute.0"></a> result&lt;_, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
-</ul>
-<h4><a name="method_graph_execution_context_get_output"></a><code>[method]graph-execution-context.get-output: func</code></h4>
-<p>Extract the outputs after inference.</p>
-<h5>Params</h5>
-<ul>
-<li><a name="method_graph_execution_context_get_output.self"></a><code>self</code>: borrow&lt;<a href="#graph_execution_context"><a href="#graph_execution_context"><code>graph-execution-context</code></a></a>&gt;</li>
-<li><a name="method_graph_execution_context_get_output.name"></a><code>name</code>: <code>string</code></li>
-</ul>
-<h5>Return values</h5>
-<ul>
-<li><a name="method_graph_execution_context_get_output.0"></a> result&lt;own&lt;<a href="#tensor"><a href="#tensor"><code>tensor</code></a></a>&gt;, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
+<li><a name="method_graph_execution_context_compute.0"></a> result&lt;list&lt;<a href="#named_tensor"><a href="#named_tensor"><code>named-tensor</code></a></a>&gt;, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
 </ul>
 <h2><a name="wasi_nn_graph_0_2_0_rc_2024_06_25"></a>Import interface wasi:nn/graph@0.2.0-rc-2024-06-25</h2>
 <p>A <a href="#graph"><code>graph</code></a> is a loaded instance of a specific ML model (e.g., MobileNet) for a specific ML
