@@ -9,14 +9,14 @@ Then, the user passes <em>tensor</em> inputs to the <em>graph</em>, computes the
 <ul>
 <li>Imports:
 <ul>
-<li>interface <a href="#wasi_nn_tensor_0_2_0_rc_2024_06_25"><code>wasi:nn/tensor@0.2.0-rc-2024-06-25</code></a></li>
-<li>interface <a href="#wasi_nn_errors_0_2_0_rc_2024_06_25"><code>wasi:nn/errors@0.2.0-rc-2024-06-25</code></a></li>
-<li>interface <a href="#wasi_nn_inference_0_2_0_rc_2024_06_25"><code>wasi:nn/inference@0.2.0-rc-2024-06-25</code></a></li>
-<li>interface <a href="#wasi_nn_graph_0_2_0_rc_2024_06_25"><code>wasi:nn/graph@0.2.0-rc-2024-06-25</code></a></li>
+<li>interface <a href="#wasi_nn_tensor_0_2_0_rc_2024_08_19"><code>wasi:nn/tensor@0.2.0-rc-2024-08-19</code></a></li>
+<li>interface <a href="#wasi_nn_errors_0_2_0_rc_2024_08_19"><code>wasi:nn/errors@0.2.0-rc-2024-08-19</code></a></li>
+<li>interface <a href="#wasi_nn_inference_0_2_0_rc_2024_08_19"><code>wasi:nn/inference@0.2.0-rc-2024-08-19</code></a></li>
+<li>interface <a href="#wasi_nn_graph_0_2_0_rc_2024_08_19"><code>wasi:nn/graph@0.2.0-rc-2024-08-19</code></a></li>
 </ul>
 </li>
 </ul>
-<h2><a name="wasi_nn_tensor_0_2_0_rc_2024_06_25"></a>Import interface wasi:nn/tensor@0.2.0-rc-2024-06-25</h2>
+<h2><a name="wasi_nn_tensor_0_2_0_rc_2024_08_19"></a>Import interface wasi:nn/tensor@0.2.0-rc-2024-08-19</h2>
 <p>All inputs and outputs to an ML inference are represented as <a href="#tensor"><code>tensor</code></a>s.</p>
 <hr />
 <h3>Types</h3>
@@ -90,7 +90,7 @@ containing a single value, use <code>[1]</code> for the tensor dimensions.</p>
 <ul>
 <li><a name="method_tensor_data.0"></a> <a href="#tensor_data"><a href="#tensor_data"><code>tensor-data</code></a></a></li>
 </ul>
-<h2><a name="wasi_nn_errors_0_2_0_rc_2024_06_25"></a>Import interface wasi:nn/errors@0.2.0-rc-2024-06-25</h2>
+<h2><a name="wasi_nn_errors_0_2_0_rc_2024_08_19"></a>Import interface wasi:nn/errors@0.2.0-rc-2024-08-19</h2>
 <p>TODO: create function-specific errors (https://github.com/WebAssembly/wasi-nn/issues/42)</p>
 <hr />
 <h3>Types</h3>
@@ -158,7 +158,7 @@ e.g., cannot access a hardware feature requested
 <ul>
 <li><a name="method_error_data.0"></a> <code>string</code></li>
 </ul>
-<h2><a name="wasi_nn_inference_0_2_0_rc_2024_06_25"></a>Import interface wasi:nn/inference@0.2.0-rc-2024-06-25</h2>
+<h2><a name="wasi_nn_inference_0_2_0_rc_2024_08_19"></a>Import interface wasi:nn/inference@0.2.0-rc-2024-08-19</h2>
 <p>An inference &quot;session&quot; is encapsulated by a <a href="#graph_execution_context"><code>graph-execution-context</code></a>. This structure binds a
 <a href="#graph"><code>graph</code></a> to input tensors before <code>compute</code>-ing an inference:</p>
 <hr />
@@ -213,7 +213,7 @@ https://github.com/WebAssembly/wasi-nn/issues/43.</p>
 <ul>
 <li><a name="method_graph_execution_context_get_output.0"></a> result&lt;own&lt;<a href="#tensor"><a href="#tensor"><code>tensor</code></a></a>&gt;, own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;&gt;</li>
 </ul>
-<h2><a name="wasi_nn_graph_0_2_0_rc_2024_06_25"></a>Import interface wasi:nn/graph@0.2.0-rc-2024-06-25</h2>
+<h2><a name="wasi_nn_graph_0_2_0_rc_2024_08_19"></a>Import interface wasi:nn/graph@0.2.0-rc-2024-08-19</h2>
 <p>A <a href="#graph"><code>graph</code></a> is a loaded instance of a specific ML model (e.g., MobileNet) for a specific ML
 framework (e.g., TensorFlow):</p>
 <hr />
