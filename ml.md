@@ -138,16 +138,6 @@ e.g., cannot access a hardware feature requested
 <h4><a name="error"></a><code>resource error</code></h4>
 <hr />
 <h3>Functions</h3>
-<h4><a name="constructor_error"></a><code>[constructor]error: func</code></h4>
-<h5>Params</h5>
-<ul>
-<li><a name="constructor_error.code"></a><code>code</code>: <a href="#error_code"><a href="#error_code"><code>error-code</code></a></a></li>
-<li><a name="constructor_error.data"></a><code>data</code>: <code>string</code></li>
-</ul>
-<h5>Return values</h5>
-<ul>
-<li><a name="constructor_error.0"></a> own&lt;<a href="#error"><a href="#error"><code>error</code></a></a>&gt;</li>
-</ul>
 <h4><a name="method_error_code"></a><code>[method]error.code: func</code></h4>
 <p>Return the error code.</p>
 <h5>Params</h5>
