@@ -62,48 +62,19 @@ interface tensor {
 /// framework (e.g., TensorFlow):
 interface graph {
     use errors.{error};
-    use tensor.{tensor};
     use inference.{graph-execution-context};
-
-    /// An execution graph for performing inference (i.e., a model).
-    resource graph {
-        init-execution-context: func() -> result<graph-execution-context, error>;
-    }
-
-    /// Describes the encoding of the graph. This allows the API to be implemented by various
-    /// backends that encode (i.e., serialize) their graph IR with different formats.
-    enum graph-encoding {
-        openvino,
-        onnx,
-        tensorflow,
-        pytorch,
-        tensorflowlite,
-        ggml,
-        autodetect,
-    }
-
-    /// Define where the graph should be executed.
-    enum execution-target {
-        cpu,
-        gpu,
-        tpu
-    }
-
-    /// The graph initialization data.
-    ///
-    /// This gets bundled up into an array of buffers because implementing backends may encode their
-    /// graph IR in parts (e.g., OpenVINO stores its IR and weights separately).
-    type graph-builder = list<u8>;
-
-    /// Load a `graph` from an opaque sequence of bytes to use for inference.
-    load: func(builder: list<graph-builder>, encoding: graph-encoding, target: execution-target) -> result<graph, error>;
 
     /// Load a `graph` by name.
     ///
     /// How the host expects the names to be passed and how it stores the graphs for retrieval via
     /// this function is **implementation-specific**. This allows hosts to choose name schemes that
     /// range from simple to complex (e.g., URLs?) and caching mechanisms of various kinds.
-    load-by-name: func(name: string) -> result<graph, error>;
+    load: func(name: string) -> result<graph, error>;
+
+    /// An execution graph for performing inference (i.e., a model).
+    resource graph {
+        init-execution-context: func() -> result<graph-execution-context, error>;
+    }
 }
 
 /// An inference "session" is encapsulated by a `graph-execution-context`. This structure binds a
@@ -137,8 +108,6 @@ interface errors {
     enum error-code {
         // Caller module passed an invalid argument.
         invalid-argument,
-        // Invalid encoding.
-        invalid-encoding,
         // The operation timed out.
         timeout,
         // Runtime Error.
