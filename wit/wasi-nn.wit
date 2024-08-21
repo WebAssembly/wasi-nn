@@ -68,6 +68,23 @@ interface graph {
     /// An execution graph for performing inference (i.e., a model).
     resource graph {
         init-execution-context: func() -> result<graph-execution-context, error>;
+
+        /// Retrieve the properties of the graph.
+        ///
+        /// These are metadata about the graph, unique to the graph and the
+        /// ML backend providing it.
+        list-properties: func() -> list<string>;
+
+        /// Retrieve the value of a property.
+        ///
+        /// If the property does not exist, this function returns `none`.
+        get-property: func(name: string) -> option<string>;
+
+        /// Modify the value of a property.
+        ///
+        /// If the operation fails, this function returns a string from the ML
+        /// backend describing the error.
+        set-property: func(name: string, value: string) -> result<_, string>;
     }
 
     /// Describes the encoding of the graph. This allows the API to be implemented by various
